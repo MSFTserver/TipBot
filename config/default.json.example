@@ -1,0 +1,26 @@
+{
+  // Bot configuration
+  "bot": {
+      "token":"Bot-Token",
+      "prefix": "!",
+      "debug": true
+  },
+  "ravend": {
+      "port": 3335,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  },
+    "doged": {
+      "port": 3336,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  },
+  "mongodb": {
+      "url":"mongodb://localhost:27017/TipBot"
+  },
+  "moderation":{
+  "perms": ["Community Leader","RVNMOD","Community Admin","Admin"], // Roles that have access to all commands.
+  "logchannel": "410638358390243340", // Channel to log the bots moderation..
+  "botspamchannel": "409219997735452672"
+  }
+}
