@@ -8,6 +8,7 @@ Features:
 - **out of the box Supported Coins**
     - Dogecoin (DOGE)
     - Ravencoin (RVN)
+    - LBRY Credits (LBC)
 
 ## Requirements
 
