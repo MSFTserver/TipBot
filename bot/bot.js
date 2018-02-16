@@ -30,7 +30,7 @@ bot.on("ready", function() {
   require("./plugins.js").init();
   console.log("type " + config.prefix + "help in Discord for a commands list.");
   bot.user.setActivity(config.prefix + "Intialized!");
-  var text = ["tiprvn", "tipdoge"];
+  var text = ["tiprvn", "tipdoge", "tiplbry"];
   var counter = 0;
   setInterval(change, 10000);
 
