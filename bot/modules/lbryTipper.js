@@ -4,14 +4,14 @@ const bitcoin = require("bitcoin"); //leave as const bitcoin = require('bitcoin'
 let Regex = require("regex"),
   config = require("config"),
   spamchannel = config.get("moderation").botspamchannel;
-config = config.get("doged");
-const doge = new bitcoin.Client(config);
+config = config.get("lbryd");
+const lbry = new lbry.Client(config);
 
-exports.commands = ["tipdoge", "multitipdoge", "roletipdoge"];
-exports.tipdoge = {
+exports.commands = ["tiplbc", "multitiplbc", "roletiplbc"];
+exports.tiplbc = {
   usage: "<subcommand>",
   description:
-    "**!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.",
+    "**!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.",
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace("!", ""),
       words = msg.content
@@ -22,8 +22,8 @@ exports.tipdoge = {
         }),
       subcommand = words.length >= 2 ? words[1] : "help",
       helpmsg =
-        "**!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitipdoge** : Displays This Message Below\n" +
-        "    **!multitipdoge <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipdoge private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletipdoge** : Displays This Message Below\n    **!roletipdoge <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipdoge private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**",
+        "**!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitiplbc** : Displays This Message Below\n" +
+        "    **!multitiplbc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiplbc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletiplbc** : Displays This Message Below\n    **!roletiplbc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiplbc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**",
       channelwarning =
         "Please use <#" + spamchannel + "> or DMs to talk to bots.";
     switch (subcommand) {
@@ -49,10 +49,10 @@ exports.tipdoge = {
   }
 };
 
-exports.multitipdoge = {
+exports.multitiplbc = {
   usage: "<subcommand>",
   description:
-    "**!multitipdoge** : Displays This Message\n    **!multitipdoge <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipdoge private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+    "**!multitiplbc** : Displays This Message\n    **!multitiplbc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiplbc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace("!", ""),
       words = msg.content
@@ -63,7 +63,7 @@ exports.multitipdoge = {
         }),
       subcommand = words.length >= 2 ? words[1] : "help",
       helpmsg =
-        "**!multitipdoge** : Displays This Message\n    **!multitipdoge <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipdoge private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+        "**!multitiplbc** : Displays This Message\n    **!multitiplbc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiplbc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
       channelwarning =
         "Please use <#" + spamchannel + "> or DMs to talk to bots.";
     switch (subcommand) {
@@ -77,10 +77,10 @@ exports.multitipdoge = {
   }
 };
 
-exports.roletipdoge = {
+exports.roletiplbc = {
   usage: "<subcommand>",
   description:
-    "**!roletipdoge** : Displays This Message\n    **!roletipdoge <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipdoge private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+    "**!roletiplbc** : Displays This Message\n    **!roletiplbc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiplbc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace("!", ""),
       words = msg.content
@@ -91,7 +91,7 @@ exports.roletipdoge = {
         }),
       subcommand = words.length >= 2 ? words[1] : "help",
       helpmsg =
-        "**!roletipdoge** : Displays This Message\n    **!roletipdoge <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipdoge private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+        "**!roletiplbc** : Displays This Message\n    **!roletiplbc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiplbc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
       channelwarning =
         "Please use <#" + spamchannel + "> or DMs to talk to bots.";
     switch (subcommand) {
@@ -118,13 +118,13 @@ function doHelp(message, helpmsg) {
 }
 
 function doBalance(message, tipper) {
-  doge.getBalance(tipper, 1, function(err, balance) {
+  lbry.getBalance(tipper, 1, function(err, balance) {
     if (err) {
       message
-        .reply("Error getting DOGE balance.")
+        .reply("Error getting LBRY balance.")
         .then(message => message.delete(5000));
     } else {
-      message.reply("You have *" + balance + "* DOGE");
+      message.reply("You have *" + balance + "* LBC");
     }
   });
 }
@@ -133,10 +133,10 @@ function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
       message
-        .reply("Error getting your DOGE deposit address.")
+        .reply("Error getting your LBRY deposit address.")
         .then(message => message.delete(5000));
     } else {
-      message.reply("Your DOGE (DOGE) address is " + address);
+      message.reply("Your LBRY (LBC) address is " + address);
     }
   });
 }
@@ -152,19 +152,19 @@ function doWithdraw(message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to withdraw that many DOGE coins...")
+      .reply("I dont know how to withdraw that many LBRY coins...")
       .then(message => message.delete(5000));
     return;
   }
 
-  doge.sendFrom(tipper, address, Number(amount), function(err, txId) {
+  lbry.sendFrom(tipper, address, amount, function(err, txId) {
     if (err) {
       message.reply(err.message).then(message => message.delete(5000));
     } else {
       message.reply(
         "You withdrew " +
           amount +
-          " DOGE to " +
+          " LBC to " +
           address +
           "\n" +
           txLink(txId) +
@@ -191,13 +191,13 @@ function doTip(message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to tip that many DOGE coins...")
+      .reply("I dont know how to tip that many LBRY coins...")
       .then(message => message.delete(5000));
     return;
   }
 
   if (message.mentions.users.first().id) {
-    sendDOGE(
+    sendLBC(
       message,
       tipper,
       message.mentions.users.first().id.replace("!", ""),
@@ -227,7 +227,7 @@ function doMultiTip(message, tipper, words, helpmsg) {
   let [userIDs, amount] = findUserIDsAndAmount(message, words, prv);
   if (amount == null) {
     message
-      .reply("I don't know how to tip that many DOGE coins...")
+      .reply("I don't know how to tip that many LBRY coins...")
       .then(message => message.delete(5000));
     return;
   }
@@ -238,7 +238,7 @@ function doMultiTip(message, tipper, words, helpmsg) {
     return;
   }
   for (var i = 0; i < userIDs.length; i++) {
-    sendDOGE(message, tipper, userIDs[i].toString(), amount, prv);
+    sendLBC(message, tipper, userIDs[i].toString(), amount, prv);
   }
 }
 
@@ -256,7 +256,7 @@ function doRoleTip(message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
   if (amount == null) {
     message
-      .reply("I don't know how to tip that many DOGE coins...")
+      .reply("I don't know how to tip that many LBRY coins...")
       .then(message => message.delete(5000));
     return;
   }
@@ -266,7 +266,7 @@ function doRoleTip(message, tipper, words, helpmsg) {
         .first()
         .members.map(member => member.user.id.replace("!", ""));
       for (var i = 0; i < userIDs.length; i++) {
-        sendDOGE(message, tipper, userIDs[i].toString(), amount, prv);
+        sendLBC(message, tipper, userIDs[i], amount, prv);
       }
     } else {
       message
@@ -302,12 +302,12 @@ function findUserIDsAndAmount(message, words, prv) {
   return [idList, amount];
 }
 
-function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
-  getAddress(recipient, function(err, address) {
+function sendLBC(message, tipper, recipient, amount, privacyFlag) {
+  getAddress(recipient.toString(), function(err, address) {
     if (err) {
       message.reply(err.message).then(message => message.delete(5000));
     } else {
-      doge.sendFrom(tipper, address, Number(amount), 1, null, null, function(
+      lbry.sendFrom(tipper, address, amount, 1, null, null, function(
         err,
         txId
       ) {
@@ -320,14 +320,14 @@ function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
               message.mentions.users.first().username +
               " " +
               amount +
-              " DOGE\n" +
+              " LBC\n" +
               txLink(txId) +
               "\n" +
-              "DM me `!tipdoge` for Tipbot instructions.";
+              "DM me `!tiplbc` for lbcTIpper instructions.";
             if (
-              message.content.startsWith("!tipdoge private ") ||
-              message.content.startsWith("!multitipdoge private ") ||
-              message.content.startsWith("!roletipdoge private ")
+              message.content.startsWith("!tiplbc private ") ||
+              message.content.startsWith("!multitiplbc private ") ||
+              message.content.startsWith("!roletiplbc private ")
             ) {
               message.delete(1000); //Supposed to delete message
             }
@@ -336,10 +336,10 @@ function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
               var iimessage =
                 " You got privately tipped " +
                 amount +
-                " DOGE\n" +
+                " LBC\n" +
                 txLink(txId) +
                 "\n" +
-                "DM me `!tipdoge` for TipBot instructions.";
+                "DM me `!tiplbc` for lbcTIpper instructions.";
               message.mentions.users.first().send(iimessage);
             }
           } else {
@@ -348,10 +348,10 @@ function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
               recipient +
               "> " +
               amount +
-              " DOGE\n" +
+              " LBC\n" +
               txLink(txId) +
               "\n" +
-              "DM me `!tipdoge` for TipBot instructions.";
+              "DM me `!tiplbc` for lbcTIpper instructions.";
             message.reply(iiimessage);
           }
         }
@@ -361,13 +361,13 @@ function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
 }
 
 function getAddress(userId, cb) {
-  doge.getAddressesByAccount(userId, function(err, addresses) {
+  lbry.getAddressesByAccount(userId, function(err, addresses) {
     if (err) {
       cb(err);
     } else if (addresses.length > 0) {
       cb(null, addresses[0]);
     } else {
-      doge.getNewAddress(userId, function(err, address) {
+      lbry.getNewAddress(userId, function(err, address) {
         if (err) {
           cb(err);
         } else {
@@ -388,12 +388,12 @@ function inPrivateOrBotSpam(msg) {
 
 function getValidatedAmount(amount) {
   amount = amount.trim();
-  if (amount.toLowerCase().endsWith("doge")) {
+  if (amount.toLowerCase().endsWith("lbc")) {
     amount = amount.substring(0, amount.length - 3);
   }
   return amount.match(/^[0-9]+(\.[0-9]+)?$/) ? amount : null;
 }
 
 function txLink(txId) {
-  return "https://dogechain.info/tx/" + txId;
+  return "http://Explorer-Url/tx/" + txId;
 }

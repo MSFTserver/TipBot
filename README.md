@@ -27,6 +27,7 @@ wallet folder found in %appdata% (default Roaming Folder):
 
 ```
 server=1
+par=1
 rpcbind=127.0.0.1
 rpcallowip=127.0.0.1
 rpcport=3335

@@ -1,6 +1,6 @@
 "use strict";
 
-const bitcoin = require("bitcoin");
+const bitcoin = require("bitcoin"); //leave as const bitcoin = require('bitcoin');
 let Regex = require("regex"),
   config = require("config"),
   spamchannel = config.get("moderation").botspamchannel;
