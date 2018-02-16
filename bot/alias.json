@@ -1,3 +1,14 @@
 {
-"tip":"tiprvn"  
+"tip":"tiprvn",
+"rvntip":"tiprvn",
+"roletip":"roletiprvn",
+"multitip":"multitirvn",
+"rvnroletip":"roletiprvn",
+"rvnmultitip":"multitirvn",
+"dogetip":"tipdoge",
+"dogeroletip":"roletipdoge",
+"dogemultitip":"multitidoge",
+"lbctip":"tiplbc",
+"lbcmultitip":"multitilbc",
+"lbcroletip":"roletiplbc"
 }
