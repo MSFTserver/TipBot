@@ -50,11 +50,6 @@ edit the following according to your wallets config options set in the previous 
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
 },
-"doged": {
-  "port": 3336,
-  "user": "username",
-  "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
-},
 ```
 
 then run:
