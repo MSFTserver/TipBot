@@ -5,7 +5,7 @@ let Regex = require("regex"),
   config = require("config"),
   spamchannel = config.get("moderation").botspamchannel;
 config = config.get("lbryd");
-const lbry = new lbry.Client(config);
+const lbry = new bitcoin.Client(config);  //leave as = new bitcoin.Client(config)
 
 exports.commands = ["tiplbc", "multitiplbc", "roletiplbc"];
 exports.tiplbc = {
@@ -395,5 +395,5 @@ function getValidatedAmount(amount) {
 }
 
 function txLink(txId) {
-  return "http://Explorer-Url/tx/" + txId;
+  return "https://explorer.lbry.io/tx/" + txId;
 }

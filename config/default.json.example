@@ -19,7 +19,7 @@
     "port": 3337,
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
-},
+  },
   "mongodb": {
       "url":"mongodb://localhost:27017/TipBot"
   },

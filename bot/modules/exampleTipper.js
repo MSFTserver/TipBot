@@ -2,10 +2,10 @@
 Simply find and replace instances below with the coin and symbol you want to use!
 search and replace with case sensitivity!!
 example:
-1. bitcoin  = lightcoin
-2. Bitcoin  = Lightcoin
-3. btc      = ltc
-4. BTC      = LTC
+1. lightcoin  = ethereum
+2. Litecoin   = Ethereum
+3. ltc        = eth
+4. LTC        = ETH
 */
 
 /*
@@ -15,23 +15,23 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 let Regex = require('regex'),
 config = require('config'),
 spamchannel = config.get('moderation').botspamchannel;
-config = config.get('bitcoind');
-const bitcoin = new bitcoin.Client(config);
+config = config.get('litecoind');
+const litecoin = new bitcoin.Client(config);  //leave as = new bitcoin.Client(config)
 
 exports.commands = [
-  "tipbtc",
-  "multitipbtc",
-  "roletipbtc"
+  "tipltc",
+  "multitipltc",
+  "roletipltc"
 ]
-exports.tipbtc = {
+exports.tipltc = {
   usage: "<subcommand>",
-  description: '**!tipbtc** : Displays This Message\n    **!tipbtc balance** : get your balance\n    **!tipbtc deposit** : get address for your deposits\n    **!tipbtc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipbtc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipbtc private <user> <amount>** : put private before Mentioning a user to tip them privately.',
+  description: '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.',
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
       words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
       subcommand = words.length >= 2 ? words[1] : 'help',
-      helpmsg = '**!tipbtc** : Displays This Message\n    **!tipbtc balance** : get your balance\n    **!tipbtc deposit** : get address for your deposits\n    **!tipbtc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipbtc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipbtc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitipbtc** : Displays This Message Below\n' +
-      '    **!multitipbtc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipbtc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletipbtc** : Displays This Message Below\n    **!roletipbtc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipbtc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
+      helpmsg = '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitipltc** : Displays This Message Below\n' +
+      '    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletipltc** : Displays This Message Below\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
       channelwarning = 'Please use <#'+ spamchannel + '> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help': privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]); break;
@@ -43,14 +43,14 @@ exports.tipbtc = {
   }
 }
 
-exports.multitipbtc = {
+exports.multitipltc = {
   usage: "<subcommand>",
-  description: "**!multitipbtc** : Displays This Message\n    **!multitipbtc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipbtc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+  description: "**!multitipltc** : Displays This Message\n    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
         words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
         subcommand = words.length >= 2 ? words[1] : 'help',
-        helpmsg = '**!multitipbtc** : Displays This Message\n    **!multitipbtc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipbtc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
+        helpmsg = '**!multitipltc** : Displays This Message\n    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
         channelwarning = 'Please use <#'+ spamchannel + '> or DMs to talk to bots.';
     switch(subcommand) {
       case 'help': privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]); break;
@@ -60,14 +60,14 @@ exports.multitipbtc = {
 }
 
 
-exports.roletipbtc = {
+exports.roletipltc = {
   usage: "<subcommand>",
-  description: "**!roletipbtc** : Displays This Message\n    **!roletipbtc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipbtc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+  description: "**!roletipltc** : Displays This Message\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
         words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
         subcommand = words.length >= 2 ? words[1] : 'help',
-        helpmsg = '**!roletipbtc** : Displays This Message\n    **!roletipbtc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipbtc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
+        helpmsg = '**!roletipltc** : Displays This Message\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
         channelwarning = 'Please use <#'+ spamchannel + '> or DMs to talk to bots.';
     switch(subcommand) {
       case 'help': privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]); break;
@@ -92,12 +92,12 @@ function doHelp(message, helpmsg) {
 
 
 function doBalance(message, tipper) {
-  bitcoin.getBalance(tipper, 1, function (err, balance) {
+  litecoin.getBalance(tipper, 1, function (err, balance) {
     if (err) {
-      message.reply('Error getting Bitcoin balance.').then(message => message.delete(5000));
+      message.reply('Error getting Litecoin balance.').then(message => message.delete(5000));
     }
     else {
-      message.reply('You have *' + balance + '* BTC');
+      message.reply('You have *' + balance + '* LTC');
     }
   });
 }
@@ -106,10 +106,10 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function (err, address) {
     if (err) {
-      message.reply('Error getting your Bitcoin deposit address.').then(message => message.delete(5000));
+      message.reply('Error getting your Litecoin deposit address.').then(message => message.delete(5000));
     }
     else {
-      message.reply('Your Bitcoin (BTC) address is ' + address);
+      message.reply('Your Litecoin (LTC) address is ' + address);
     }
   });
 }
@@ -125,16 +125,16 @@ function doWithdraw(message, tipper, words, helpmsg) {
       amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply('I dont know how to withdraw that many Bitcoin coins...').then(message => message.delete(5000));
+    message.reply('I dont know how to withdraw that many Litecoin coins...').then(message => message.delete(5000));
     return;
   }
 
-  bitcoin.sendFrom(tipper, address, amount, function (err, txId) {
+  litecoin.sendFrom(tipper, address, amount, function (err, txId) {
     if (err) {
       message.reply(err.message).then(message => message.delete(5000));
     }
     else {
-      message.reply('You withdrew ' + amount + ' BTC to ' + address + '\n' + txLink(txId) + '\n');
+      message.reply('You withdrew ' + amount + ' LTC to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
@@ -156,12 +156,12 @@ function doTip(message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply('I dont know how to tip that many Bitcoin coins...').then(message => message.delete(5000));
+    message.reply('I dont know how to tip that many Litecoin coins...').then(message => message.delete(5000));
     return;
   }
 
   if (message.mentions.users.first().id) {
-    sendBTC(message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
+    sendLTC(message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
   }
   else {
     message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(5000));
@@ -184,7 +184,7 @@ function doMultiTip(message, tipper, words, helpmsg) {
   }
   let [userIDs, amount] = findUserIDsAndAmount(message, words, prv);
   if (amount == null) {
-    message.reply('I don\'t know how to tip that many Bitcoin coins...').then(message => message.delete(5000));
+    message.reply('I don\'t know how to tip that many Litecoin coins...').then(message => message.delete(5000));
     return;
   }
   if (!userIDs) {
@@ -192,7 +192,7 @@ function doMultiTip(message, tipper, words, helpmsg) {
     return;
   }
   for (var i = 0; i < userIDs.length; i++) {
-    sendBTC(message, tipper, userIDs[i].toString(), amount, prv);
+    sendLTC(message, tipper, userIDs[i].toString(), amount, prv);
   }
 }
 
@@ -210,14 +210,14 @@ function doRoleTip(message, tipper, words, helpmsg) {
   }
   let amount = getValidatedAmount(words[amountOffset]);
   if (amount == null) {
-    message.reply('I don\'t know how to tip that many Bitcoin coins...').then(message => message.delete(5000));
+    message.reply('I don\'t know how to tip that many Litecoin coins...').then(message => message.delete(5000));
     return;
   }
   if (message.mentions.roles.first().id) {
     if (message.mentions.roles.first().members.first().id) {
       let userIDs = message.mentions.roles.first().members.map(member => member.user.id.replace('!', ''));
       for (var i = 0; i < userIDs.length; i++) {
-        sendBTC(message, tipper, userIDs[i], amount, prv);
+        sendLTC(message, tipper, userIDs[i], amount, prv);
       }
     }
     else {
@@ -253,35 +253,35 @@ function findUserIDsAndAmount(message, words, prv) {
 }
 
 
-function sendBTC(message, tipper, recipient, amount, privacyFlag) {
+function sendLTC(message, tipper, recipient, amount, privacyFlag) {
   getAddress(recipient.toString(), function (err, address) {
     if (err) {
       message.reply(err.message).then(message => message.delete(5000));
     }
     else {
-      bitcoin.sendFrom(tipper, address, amount, 1, null, null, function (err, txId) {
+      litecoin.sendFrom(tipper, address, amount, 1, null, null, function (err, txId) {
         if (err) {
           message.reply(err.message).then(message => message.delete(5000));
         }
         else {
           if (privacyFlag) {
             var imessage =
-              ' You privately tipped ' + message.mentions.users.first().username + ' ' + amount + ' BTC\n' + txLink(txId) + '\n' +
-              'DM me `!tipbtc` for btcTIpper instructions.'
-            if (message.content.startsWith("!tipbtc private ") || message.content.startsWith("!multitipbtc private ") || message.content.startsWith("!roletipbtc private ")) {
+              ' You privately tipped ' + message.mentions.users.first().username + ' ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+              'DM me `!tipltc` for ltcTIpper instructions.'
+            if (message.content.startsWith("!tipltc private ") || message.content.startsWith("!multitipltc private ") || message.content.startsWith("!roletipltc private ")) {
                message.delete(1000); //Supposed to delete message
             }
             message.author.send(imessage);
             if (message.author.id != message.mentions.users.first().id) {
               var iimessage =
-                ' You got privately tipped ' + amount + ' BTC\n' + txLink(txId) + '\n' +
-                'DM me `!tipbtc` for btcTIpper instructions.'
+                ' You got privately tipped ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+                'DM me `!tipltc` for ltcTIpper instructions.'
               message.mentions.users.first().send(iimessage);
             }
           } else {
             var iiimessage =
-              ' tipped <@' + recipient + '> ' + amount + ' BTC\n' + txLink(txId) + '\n' +
-              'DM me `!tipbtc` for btcTIpper instructions.'
+              ' tipped <@' + recipient + '> ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+              'DM me `!tipltc` for ltcTIpper instructions.'
             message.reply(iiimessage);
           }
         }
@@ -292,7 +292,7 @@ function sendBTC(message, tipper, recipient, amount, privacyFlag) {
 
 
 function getAddress(userId, cb) {
-  bitcoin.getAddressesByAccount(userId, function (err, addresses) {
+  litecoin.getAddressesByAccount(userId, function (err, addresses) {
     if (err) {
       cb(err);
     }
@@ -300,7 +300,7 @@ function getAddress(userId, cb) {
       cb(null, addresses[0]);
     }
     else {
-      bitcoin.getNewAddress(userId, function (err, address) {
+      litecoin.getNewAddress(userId, function (err, address) {
         if (err) {
           cb(err);
         }
@@ -324,7 +324,7 @@ function inPrivateOrBotSpam(msg) {
 
 function getValidatedAmount(amount) {
   amount = amount.trim();
-  if (amount.toLowerCase().endsWith('btc')) {
+  if (amount.toLowerCase().endsWith('ltc')) {
     amount = amount.substring(0, amount.length - 3);
   }
   return amount.match(/^[0-9]+(\.[0-9]+)?$/) ? amount : null;

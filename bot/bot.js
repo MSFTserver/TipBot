@@ -9,12 +9,16 @@ config = config.get("bot");
 var aliases;
 try {
   aliases = require("./alias.json");
+  console.log("aliases:")
+  console.log(aliases)
 } catch (e) {
+  console.log("No aliases defined")
   //No aliases defined
   aliases = {
     test: {
       process: function(bot, msg) {
         msg.channel.send("test");
+        console.log("test")
       }
     }
   };
@@ -72,7 +76,7 @@ function checkMessageForCommand(msg, isEdit) {
     }
     let alias = aliases[cmdTxt];
     if (alias) {
-      var cmd = alias;
+      var cmd =  commands[alias];
     } else {
       var cmd = commands[cmdTxt];
     }
