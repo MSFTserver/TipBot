@@ -19,16 +19,16 @@ config = config.get('litecoind');
 const litecoin = new bitcoin.Client(config);  //leave as = new bitcoin.Client(config)
 
 exports.commands = [
-  "tipltc",
-  "multitipltc",
-  "roletipltc"
+  'tipltc',
+  'multitipltc',
+  'roletipltc'
 ]
 exports.tipltc = {
-  usage: "<subcommand>",
+  usage: '<subcommand>',
   description: '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.',
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
-      words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
+      words = msg.content.trim().split(' ').filter(function (n) { return n !== ''; }),
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg = '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitipltc** : Displays This Message Below\n' +
       '    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletipltc** : Displays This Message Below\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
@@ -44,11 +44,11 @@ exports.tipltc = {
 }
 
 exports.multitipltc = {
-  usage: "<subcommand>",
-  description: "**!multitipltc** : Displays This Message\n    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+  usage: '<subcommand>',
+  description: '**!multitipltc** : Displays This Message\n    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
-        words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
+        words = msg.content.trim().split(' ').filter(function (n) { return n !== ''; }),
         subcommand = words.length >= 2 ? words[1] : 'help',
         helpmsg = '**!multitipltc** : Displays This Message\n    **!multitipltc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipltc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
         channelwarning = 'Please use <#'+ spamchannel + '> or DMs to talk to bots.';
@@ -61,11 +61,11 @@ exports.multitipltc = {
 
 
 exports.roletipltc = {
-  usage: "<subcommand>",
-  description: "**!roletipltc** : Displays This Message\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**",
+  usage: '<subcommand>',
+  description: '**!roletipltc** : Displays This Message\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
   process: async function (bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
-        words = msg.content.trim().split(' ').filter(function (n) { return n !== ""; }),
+        words = msg.content.trim().split(' ').filter(function (n) { return n !== ''; }),
         subcommand = words.length >= 2 ? words[1] : 'help',
         helpmsg = '**!roletipltc** : Displays This Message\n    **!roletipltc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipltc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
         channelwarning = 'Please use <#'+ spamchannel + '> or DMs to talk to bots.';
@@ -264,26 +264,26 @@ function sendLTC(message, tipper, recipient, amount, privacyFlag) {
           message.reply(err.message).then(message => message.delete(5000));
         }
         else {
-          if (privacyFlag) {
-            var imessage =
-              ' You privately tipped ' + message.mentions.users.first().username + ' ' + amount + ' LTC\n' + txLink(txId) + '\n' +
-              'DM me `!tipltc` for ltcTIpper instructions.'
-            if (message.content.startsWith("!tipltc private ") || message.content.startsWith("!multitipltc private ") || message.content.startsWith("!roletipltc private ")) {
-               message.delete(1000); //Supposed to delete message
-            }
-            message.author.send(imessage);
-            if (message.author.id != message.mentions.users.first().id) {
-              var iimessage =
-                ' You got privately tipped ' + amount + ' LTC\n' + txLink(txId) + '\n' +
-                'DM me `!tipltc` for ltcTIpper instructions.'
-              message.mentions.users.first().send(iimessage);
-            }
+        if (privacyFlag) {
+                let userProfile = message.guild.members.find('id', recipient);
+                  var iimessage =
+                    ' You got privately tipped ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+                    'DM me `!tipltc` for ltcTipper instructions.'
+                  userProfile.user.send(iimessage);
+                  var imessage =
+                    ' You privately tipped ' + userProfile.user.username + ' ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+                    'DM me `!tipltc` for ltcTipper instructions.'
+                  message.author.send(imessage);
+
+                if (message.content.startsWith('!tipltc private ') || message.content.startsWith('!multitipltc private ') || message.content.startsWith('!roletipltc private ')) {
+                   message.delete(1000); //Supposed to delete message
+                }
           } else {
-            var iiimessage =
-              ' tipped <@' + recipient + '> ' + amount + ' LTC\n' + txLink(txId) + '\n' +
-              'DM me `!tipltc` for ltcTIpper instructions.'
-            message.reply(iiimessage);
-          }
+          var iiimessage =
+            ' tipped <@' + recipient + '> ' + amount + ' LTC\n' + txLink(txId) + '\n' +
+            'DM me `!tipltc` for ltcTipper instructions.'
+          message.reply(iiimessage);
+        }
         }
       });
     }
@@ -332,7 +332,7 @@ function getValidatedAmount(amount) {
 
 
 function txLink(txId) {
-  return "http://Explorer-Url/tx/" + txId;
+  return 'http://Explorer-Url/tx/' + txId;
 }
 
 */

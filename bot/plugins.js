@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-const fs = require("fs"),
-  path = require("path");
+const fs = require('fs'),
+  path = require('path');
 
 function getPlugins(srcpath) {
   return fs.readdirSync(srcpath);
 }
-let plugin_directory = path.join(__dirname, "modules");
+let plugin_directory = path.join(__dirname, 'modules');
 let plugins = getPlugins(plugin_directory);
 
 exports.init = function init() {
@@ -14,7 +14,7 @@ exports.init = function init() {
 };
 
 function load_plugins() {
-  const dbot = require("./bot.js");
+  const dbot = require('./bot.js');
   let commandCount = 0;
   let otherFunc = 0;
   for (let i = 0; i < plugins.length; i++) {
@@ -25,7 +25,7 @@ function load_plugins() {
       console.log(`Improper setup of the '${plugins[i]}' plugin. : ${err}`);
     }
     if (plugin) {
-      if ("commands" in plugin) {
+      if ('commands' in plugin) {
         for (let j = 0; j < plugin.commands.length; j++) {
           if (plugin.commands[j] in plugin) {
             dbot.addCommand(plugin.commands[j], plugin[plugin.commands[j]]);
@@ -33,7 +33,7 @@ function load_plugins() {
           }
         }
       }
-      if ("custom" in plugin) {
+      if ('custom' in plugin) {
         for (let j = 0; j < plugin.custom.length; j++) {
           if (plugin.custom[j] in plugin) {
             dbot.addCustomFunc(plugin[plugin.custom[j]]);
@@ -43,7 +43,5 @@ function load_plugins() {
       }
     }
   }
-  console.log(
-    `Loaded ${dbot.commandCount()} chat commands and ${otherFunc} custom functions.`
-  );
+  console.log(`Loaded ${dbot.commandCount()} chat commands and ${otherFunc} custom functions.`);
 }
