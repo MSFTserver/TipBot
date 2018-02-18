@@ -1,6 +1,7 @@
 'use strict';
 
 const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+
 let Regex = require('regex'),
   config = require('config'),
   spamchannel = config.get('moderation').botspamchannel;
@@ -24,22 +25,23 @@ exports.tipdoge = {
       helpmsg =
         '**!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitipdoge** : Displays This Message Below\n' +
         '    **!multitipdoge <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipdoge private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletipdoge** : Displays This Message Below\n    **!roletipdoge <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipdoge private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = false;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       case 'balance':
         doBalance(msg, tipper);
         break;
       case 'deposit':
-        privateOrBotSpamOnly(msg, channelwarning, doDeposit, [tipper]);
+        privateorSpamChannel(msg, channelwarning, doDeposit, [tipper]);
         break;
       case 'withdraw':
-        privateOrBotSpamOnly(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
         break;
       default:
-        doTip(msg, tipper, words, helpmsg);
+        doTip(bot, msg, tipper, words, helpmsg, MultiorRole);
     }
   }
 };
@@ -59,13 +61,14 @@ exports.multitipdoge = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!multitipdoge** : Displays This Message\n    **!multitipdoge <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitipdoge private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = true;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       default:
-        doMultiTip(msg, tipper, words, helpmsg);
+        doMultiTip(bot, msg, tipper, words, helpmsg, MultiorRole);
         break;
     }
   }
@@ -86,20 +89,21 @@ exports.roletipdoge = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!roletipdoge** : Displays This Message\n    **!roletipdoge <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletipdoge private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = true;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       default:
-        doRoleTip(msg, tipper, words, helpmsg);
+        doRoleTip(bot, msg, tipper, words, helpmsg, MultiorRole);
         break;
     }
   }
 };
 
-function privateOrBotSpamOnly(message, wrongchannelmsg, fn, args) {
-  if (!inPrivateOrBotSpam(message)) {
+function privateorSpamChannel(message, wrongchannelmsg, fn, args) {
+  if (!inPrivateorSpamChannel(message)) {
     message.reply(wrongchannelmsg);
     return;
   }
@@ -113,7 +117,7 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   doge.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting DOGE balance.').then(message => message.delete(5000));
+      message.reply('Error getting Doge balance.').then(message => message.delete(10000));
     } else {
       message.reply('You have *' + balance + '* DOGE');
     }
@@ -123,9 +127,9 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your DOGE deposit address.').then(message => message.delete(5000));
+      message.reply('Error getting your Doge deposit address.').then(message => message.delete(10000));
     } else {
-      message.reply('Your DOGE (DOGE) address is ' + address);
+      message.reply('Your Doge (DOGE) address is ' + address);
     }
   });
 }
@@ -140,25 +144,24 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many DOGE coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to withdraw that many Doge coins...").then(message => message.delete(10000));
     return;
   }
 
   doge.sendFrom(tipper, address, Number(amount), function(err, txId) {
     if (err) {
-      message.reply(err.message).then(message => message.delete(5000));
+      message.reply(err.message).then(message => message.delete(10000));
     } else {
       message.reply('You withdrew ' + amount + ' DOGE to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
 
-function doTip(message, tipper, words, helpmsg) {
+function doTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (words.length < 3 || !words) {
     doHelp(message, helpmsg);
     return;
   }
-
   var prv = false;
   var amountOffset = 2;
   if (words.length >= 4 && words[1] === 'private') {
@@ -169,24 +172,24 @@ function doTip(message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many DOGE coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Doge coins...").then(message => message.delete(10000));
     return;
   }
 
   if (message.mentions.users.first().id) {
-    sendDOGE(message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
+    sendDOGE(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv, MultiorRole);
   } else {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
   }
 }
 
-function doMultiTip(message, tipper, words, helpmsg) {
+function doMultiTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (!words) {
     doHelp(message, helpmsg);
     return;
   }
   if (words.length < 4) {
-    doTip(message, tipper, words, helpmsg);
+    doTip(bot, message, tipper, words, helpmsg, MultiorRole);
     return;
   }
   var prv = false;
@@ -195,19 +198,19 @@ function doMultiTip(message, tipper, words, helpmsg) {
   }
   let [userIDs, amount] = findUserIDsAndAmount(message, words, prv);
   if (amount == null) {
-    message.reply("I don't know how to tip that many DOGE coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Doge coins...").then(message => message.delete(10000));
     return;
   }
   if (!userIDs) {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
     return;
   }
   for (var i = 0; i < userIDs.length; i++) {
-    sendDOGE(message, tipper, userIDs[i].toString(), amount, prv);
+    sendDOGE(bot, message, tipper, userIDs[i].toString(), amount, prv, MultiorRole);
   }
 }
 
-function doRoleTip(message, tipper, words, helpmsg) {
+function doRoleTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (!words || words.length < 3) {
     doHelp(message, helpmsg);
     return;
@@ -220,21 +223,21 @@ function doRoleTip(message, tipper, words, helpmsg) {
   }
   let amount = getValidatedAmount(words[amountOffset]);
   if (amount == null) {
-    message.reply("I don't know how to tip that many DOGE coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Doge coins...").then(message => message.delete(10000));
     return;
   }
   if (message.mentions.roles.first().id) {
     if (message.mentions.roles.first().members.first().id) {
       let userIDs = message.mentions.roles.first().members.map(member => member.user.id.replace('!', ''));
       for (var i = 0; i < userIDs.length; i++) {
-        sendDOGE(message, tipper, userIDs[i].toString(), amount, prv);
+        sendDOGE(bot, message, tipper, userIDs[i], amount, prv, MultiorRole);
       }
     } else {
-      message.reply('Sorry, I could not find any users to tip in that role...').then(message => message.delete(5000));
+      message.reply('Sorry, I could not find any users to tip in that role...').then(message => message.delete(10000));
       return;
     }
   } else {
-    message.reply('Sorry, I could not find any roles in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find any roles in your tip...').then(message => message.delete(10000));
     return;
   }
 }
@@ -251,7 +254,7 @@ function findUserIDsAndAmount(message, words, prv) {
       count++;
       idList.push(words[i].match(/[0-9]+/));
     } else {
-      amount = getValidatedAmount(words[Number(count) + 1]);
+      amount = getValidatedAmount(words[Number(count) + startOffset]);
       if (amount == null) break;
       break;
     }
@@ -259,14 +262,14 @@ function findUserIDsAndAmount(message, words, prv) {
   return [idList, amount];
 }
 
-function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
-  getAddress(recipient, function(err, address) {
+function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag, MultiorRole) {
+  getAddress(recipient.toString(), function(err, address) {
     if (err) {
-      message.reply(err.message).then(message => message.delete(5000));
+      message.reply(err.message).then(message => message.delete(10000));
     } else {
       doge.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
         if (err) {
-          message.reply(err.message).then(message => message.delete(5000));
+          message.reply(err.message).then(message => message.delete(10000));
         } else {
           if (privacyFlag) {
             let userProfile = message.guild.members.find('id', recipient);
@@ -306,7 +309,11 @@ function sendDOGE(message, tipper, recipient, amount, privacyFlag) {
               txLink(txId) +
               '\n' +
               'DM me `!tipdoge` for dogeTipper instructions.';
-            message.reply(iiimessage);
+            if (MultiorRole) {
+              bot.channels.get(spamchannel).send('<@' + tipper + '>,' + iiimessage);
+            } else {
+              message.reply(iiimessage);
+            }
           }
         }
       });
@@ -332,7 +339,7 @@ function getAddress(userId, cb) {
   });
 }
 
-function inPrivateOrBotSpam(msg) {
+function inPrivateorSpamChannel(msg) {
   if (msg.channel.type == 'dm' || msg.channel.id === spamchannel) {
     return true;
   } else {

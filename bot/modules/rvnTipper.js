@@ -1,6 +1,7 @@
 'use strict';
 
 const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+
 let Regex = require('regex'),
   config = require('config'),
   spamchannel = config.get('moderation').botspamchannel;
@@ -24,22 +25,23 @@ exports.tiprvn = {
       helpmsg =
         '**!tiprvn** : Displays This Message\n    **!tiprvn balance** : get your balance\n    **!tiprvn deposit** : get address for your deposits\n    **!tiprvn withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiprvn <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiprvn private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitiprvn** : Displays This Message Below\n' +
         '    **!multitiprvn <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiprvn private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletiprvn** : Displays This Message Below\n    **!roletiprvn <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiprvn private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = false;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       case 'balance':
         doBalance(msg, tipper);
         break;
       case 'deposit':
-        privateOrBotSpamOnly(msg, channelwarning, doDeposit, [tipper]);
+        privateorSpamChannel(msg, channelwarning, doDeposit, [tipper]);
         break;
       case 'withdraw':
-        privateOrBotSpamOnly(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
         break;
       default:
-        doTip(msg, tipper, words, helpmsg);
+        doTip(bot, msg, tipper, words, helpmsg, MultiorRole);
     }
   }
 };
@@ -59,13 +61,14 @@ exports.multitiprvn = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!multitiprvn** : Displays This Message\n    **!multitiprvn <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiprvn private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = true;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       default:
-        doMultiTip(msg, tipper, words, helpmsg);
+        doMultiTip(bot, msg, tipper, words, helpmsg, MultiorRole);
         break;
     }
   }
@@ -86,20 +89,21 @@ exports.roletiprvn = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!roletiprvn** : Displays This Message\n    **!roletiprvn <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiprvn private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      MultiorRole = true;
     switch (subcommand) {
       case 'help':
-        privateOrBotSpamOnly(msg, channelwarning, doHelp, [helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
         break;
       default:
-        doRoleTip(msg, tipper, words, helpmsg);
+        doRoleTip(bot, msg, tipper, words, helpmsg, MultiorRole);
         break;
     }
   }
 };
 
-function privateOrBotSpamOnly(message, wrongchannelmsg, fn, args) {
-  if (!inPrivateOrBotSpam(message)) {
+function privateorSpamChannel(message, wrongchannelmsg, fn, args) {
+  if (!inPrivateorSpamChannel(message)) {
     message.reply(wrongchannelmsg);
     return;
   }
@@ -113,7 +117,7 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   raven.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Raven balance.').then(message => message.delete(5000));
+      message.reply('Error getting Raven balance.').then(message => message.delete(10000));
     } else {
       message.reply('You have *' + balance + '* RVN');
     }
@@ -123,7 +127,7 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your Raven deposit address.').then(message => message.delete(5000));
+      message.reply('Error getting your Raven deposit address.').then(message => message.delete(10000));
     } else {
       message.reply('Your Raven (RVN) address is ' + address);
     }
@@ -140,20 +144,20 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many Raven coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to withdraw that many Raven coins...").then(message => message.delete(10000));
     return;
   }
 
   raven.sendFrom(tipper, address, amount, function(err, txId) {
     if (err) {
-      message.reply(err.message).then(message => message.delete(5000));
+      message.reply(err.message).then(message => message.delete(10000));
     } else {
       message.reply('You withdrew ' + amount + ' RVN to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
 
-function doTip(message, tipper, words, helpmsg) {
+function doTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (words.length < 3 || !words) {
     doHelp(message, helpmsg);
     return;
@@ -168,24 +172,24 @@ function doTip(message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(10000));
     return;
   }
 
   if (message.mentions.users.first().id) {
-    sendRVN(message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
+    sendRVN(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv, MultiorRole);
   } else {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
   }
 }
 
-function doMultiTip(message, tipper, words, helpmsg) {
+function doMultiTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (!words) {
     doHelp(message, helpmsg);
     return;
   }
   if (words.length < 4) {
-    doTip(message, tipper, words, helpmsg);
+    doTip(bot, message, tipper, words, helpmsg, MultiorRole);
     return;
   }
   var prv = false;
@@ -194,19 +198,19 @@ function doMultiTip(message, tipper, words, helpmsg) {
   }
   let [userIDs, amount] = findUserIDsAndAmount(message, words, prv);
   if (amount == null) {
-    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(10000));
     return;
   }
   if (!userIDs) {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
     return;
   }
   for (var i = 0; i < userIDs.length; i++) {
-    sendRVN(message, tipper, userIDs[i].toString(), amount, prv);
+    sendRVN(bot, message, tipper, userIDs[i].toString(), amount, prv, MultiorRole);
   }
 }
 
-function doRoleTip(message, tipper, words, helpmsg) {
+function doRoleTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   if (!words || words.length < 3) {
     doHelp(message, helpmsg);
     return;
@@ -219,21 +223,21 @@ function doRoleTip(message, tipper, words, helpmsg) {
   }
   let amount = getValidatedAmount(words[amountOffset]);
   if (amount == null) {
-    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(5000));
+    message.reply("I don't know how to tip that many Raven coins...").then(message => message.delete(10000));
     return;
   }
   if (message.mentions.roles.first().id) {
     if (message.mentions.roles.first().members.first().id) {
       let userIDs = message.mentions.roles.first().members.map(member => member.user.id.replace('!', ''));
       for (var i = 0; i < userIDs.length; i++) {
-        sendRVN(message, tipper, userIDs[i], amount, prv);
+        sendRVN(bot, message, tipper, userIDs[i], amount, prv, MultiorRole);
       }
     } else {
-      message.reply('Sorry, I could not find any users to tip in that role...').then(message => message.delete(5000));
+      message.reply('Sorry, I could not find any users to tip in that role...').then(message => message.delete(10000));
       return;
     }
   } else {
-    message.reply('Sorry, I could not find any roles in your tip...').then(message => message.delete(5000));
+    message.reply('Sorry, I could not find any roles in your tip...').then(message => message.delete(10000));
     return;
   }
 }
@@ -258,14 +262,14 @@ function findUserIDsAndAmount(message, words, prv) {
   return [idList, amount];
 }
 
-function sendRVN(message, tipper, recipient, amount, privacyFlag) {
+function sendRVN(bot, message, tipper, recipient, amount, privacyFlag, MultiorRole) {
   getAddress(recipient.toString(), function(err, address) {
     if (err) {
-      message.reply(err.message).then(message => message.delete(5000));
+      message.reply(err.message).then(message => message.delete(10000));
     } else {
       raven.sendFrom(tipper, address, amount, 1, null, null, function(err, txId) {
         if (err) {
-          message.reply(err.message).then(message => message.delete(5000));
+          message.reply(err.message).then(message => message.delete(10000));
         } else {
           if (privacyFlag) {
             let userProfile = message.guild.members.find('id', recipient);
@@ -305,7 +309,11 @@ function sendRVN(message, tipper, recipient, amount, privacyFlag) {
               txLink(txId) +
               '\n' +
               'DM me `!tiprvn` for rvnTipper instructions.';
-            message.reply(iiimessage);
+            if (MultiorRole) {
+              bot.channels.get(spamchannel).send('<@' + tipper + '>,' + iiimessage);
+            } else {
+              message.reply(iiimessage);
+            }
           }
         }
       });
@@ -331,7 +339,7 @@ function getAddress(userId, cb) {
   });
 }
 
-function inPrivateOrBotSpam(msg) {
+function inPrivateorSpamChannel(msg) {
   if (msg.channel.type == 'dm' || msg.channel.id === spamchannel) {
     return true;
   } else {

@@ -26,6 +26,6 @@
   "moderation":{
   "perms": ["Community Leader","RVNMOD","Community Admin","Admin"], // Roles that have access to all commands.
   "logchannel": "410638358390243340", // Channel to log the bots moderation..
-  "botspamchannel": "409219997735452672"
+  "botspamchannel": "409219997735452672" //channel that the tip message will reply in if Multi or Role tip is used.
   }
 }
