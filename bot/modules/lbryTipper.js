@@ -148,7 +148,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     return;
   }
 
-  lbry.sendFrom(tipper, address, amount, function(err, txId) {
+  lbry.sendFrom(tipper, address, Number(amount), function(err, txId) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
@@ -267,7 +267,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag, MultiorRo
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      lbry.sendFrom(tipper, address, amount, 1, null, null, function(err, txId) {
+      lbry.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {

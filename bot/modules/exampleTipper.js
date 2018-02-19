@@ -159,7 +159,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     return;
   }
 
-  litecoin.sendFrom(tipper, address, amount, function(err, txId) {
+  litecoin.sendFrom(tipper, address, Number(amount), function(err, txId) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
@@ -278,7 +278,7 @@ function sendLTC(bot, message, tipper, recipient, amount, privacyFlag, MultiorRo
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      litecoin.sendFrom(tipper, address, amount, 1, null, null, function(err, txId) {
+      litecoin.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
