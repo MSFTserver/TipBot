@@ -43,5 +43,7 @@ function load_plugins() {
       }
     }
   }
-  console.log(`Loaded ${dbot.commandCount()} chat commands and ${otherFunc} custom functions.`);
+  console.log(
+    `Loaded ${dbot.commandCount()} chat commands and ${otherFunc} custom functions.`
+  );
 }

@@ -28,7 +28,9 @@ var commands = {};
 var bot = new Discord.Client();
 
 bot.on('ready', function() {
-  console.log('Logged in! Serving in ' + bot.guilds.array().length + ' servers');
+  console.log(
+    'Logged in! Serving in ' + bot.guilds.array().length + ' servers'
+  );
   require('./plugins.js').init();
   console.log('type ' + config.prefix + 'help in Discord for a commands list.');
   bot.user.setActivity(config.prefix + 'Intialized!');
@@ -53,13 +55,19 @@ bot.on('disconnected', function() {
 function checkMessageForCommand(msg, isEdit) {
   //check if message is a command
   if (msg.author.id != bot.user.id && msg.content.startsWith(config.prefix)) {
-    console.log('treating ' + msg.content + ' from ' + msg.author + ' as command');
+    console.log(
+      'treating ' + msg.content + ' from ' + msg.author + ' as command'
+    );
     var cmdTxt = msg.content.split(' ')[0].substring(config.prefix.length);
-    var suffix = msg.content.substring(cmdTxt.length + config.prefix.length + 1); //add one for the ! and one for the space
+    var suffix = msg.content.substring(
+      cmdTxt.length + config.prefix.length + 1
+    ); //add one for the ! and one for the space
     if (msg.isMentioned(bot.user)) {
       try {
         cmdTxt = msg.content.split(' ')[1];
-        suffix = msg.content.substring(bot.user.mention().length + cmdTxt.length + config.prefix.length + 1);
+        suffix = msg.content.substring(
+          bot.user.mention().length + cmdTxt.length + config.prefix.length + 1
+        );
       } catch (e) {
         //no command
         msg.channel.send('Yes?');

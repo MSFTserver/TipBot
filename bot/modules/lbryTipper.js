@@ -25,7 +25,8 @@ exports.tiplbc = {
       helpmsg =
         '**!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n**!multitiplbc** : Displays This Message Below\n' +
         '    **!multitiplbc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiplbc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n\n**!roletiplbc** : Displays This Message Below\n    **!roletiplbc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiplbc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    **<> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      channelwarning =
+        'Please use <#' + spamchannel + '> or DMs to talk to bots.',
       MultiorRole = false;
     switch (subcommand) {
       case 'help':
@@ -38,7 +39,11 @@ exports.tiplbc = {
         privateorSpamChannel(msg, channelwarning, doDeposit, [tipper]);
         break;
       case 'withdraw':
-        privateorSpamChannel(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
+        privateorSpamChannel(msg, channelwarning, doWithdraw, [
+          tipper,
+          words,
+          helpmsg
+        ]);
         break;
       default:
         doTip(bot, msg, tipper, words, helpmsg, MultiorRole);
@@ -61,7 +66,8 @@ exports.multitiplbc = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!multitiplbc** : Displays This Message\n    **!multitiplbc <@user1> <@user2> <amount>** : Mention one or more users, seperated by spaces, then an amount that each mentioned user will receive.\n    **!multitiplbc private <@user1> <@user2> <amount>** : Put private before Mentioning one or more users to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      channelwarning =
+        'Please use <#' + spamchannel + '> or DMs to talk to bots.',
       MultiorRole = true;
     switch (subcommand) {
       case 'help':
@@ -89,7 +95,8 @@ exports.roletiplbc = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!roletiplbc** : Displays This Message\n    **!roletiplbc <@role> <amount>** : Mention a single role, then an amount that each user in that role will receive.\n    **!roletiplbc private <@role> <amount>** : Put private before the role to have each user tipped privately.\n    ** <> : Replace with appropriate value.**',
-      channelwarning = 'Please use <#' + spamchannel + '> or DMs to talk to bots.',
+      channelwarning =
+        'Please use <#' + spamchannel + '> or DMs to talk to bots.',
       MultiorRole = true;
     switch (subcommand) {
       case 'help':
@@ -117,7 +124,9 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   lbry.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting LBRY balance.').then(message => message.delete(10000));
+      message
+        .reply('Error getting LBRY balance.')
+        .then(message => message.delete(10000));
     } else {
       message.reply('You have *' + balance + '* LBC');
     }
@@ -127,7 +136,9 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your LBRY deposit address.').then(message => message.delete(10000));
+      message
+        .reply('Error getting your LBRY deposit address.')
+        .then(message => message.delete(10000));
     } else {
       message.reply('Your LBRY (LBC) address is ' + address);
     }
@@ -144,7 +155,9 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many LBRY coins...").then(message => message.delete(10000));
+    message
+      .reply("I don't know how to withdraw that many LBRY coins...")
+      .then(message => message.delete(10000));
     return;
   }
 
@@ -152,7 +165,15 @@ function doWithdraw(message, tipper, words, helpmsg) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      message.reply('You withdrew ' + amount + ' LBC to ' + address + '\n' + txLink(txId) + '\n');
+      message.reply(
+        'You withdrew ' +
+          amount +
+          ' LBC to ' +
+          address +
+          '\n' +
+          txLink(txId) +
+          '\n'
+      );
     }
   });
 }
@@ -172,14 +193,26 @@ function doTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many LBRY coins...").then(message => message.delete(10000));
+    message
+      .reply("I don't know how to tip that many LBRY coins...")
+      .then(message => message.delete(10000));
     return;
   }
 
   if (message.mentions.users.first().id) {
-    sendLBC(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv, MultiorRole);
+    sendLBC(
+      bot,
+      message,
+      tipper,
+      message.mentions.users.first().id.replace('!', ''),
+      amount,
+      prv,
+      MultiorRole
+    );
   } else {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
+    message
+      .reply('Sorry, I could not find a user in your tip...')
+      .then(message => message.delete(10000));
   }
 }
 
@@ -198,15 +231,27 @@ function doMultiTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   }
   let [userIDs, amount] = findUserIDsAndAmount(message, words, prv);
   if (amount == null) {
-    message.reply("I don't know how to tip that many LBRY coins...").then(message => message.delete(10000));
+    message
+      .reply("I don't know how to tip that many LBRY coins...")
+      .then(message => message.delete(10000));
     return;
   }
   if (!userIDs) {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
+    message
+      .reply('Sorry, I could not find a user in your tip...')
+      .then(message => message.delete(10000));
     return;
   }
   for (var i = 0; i < userIDs.length; i++) {
-    sendLBC(bot, message, tipper, userIDs[i].toString(), amount, prv, MultiorRole);
+    sendLBC(
+      bot,
+      message,
+      tipper,
+      userIDs[i].toString(),
+      amount,
+      prv,
+      MultiorRole
+    );
   }
 }
 
@@ -223,21 +268,29 @@ function doRoleTip(bot, message, tipper, words, helpmsg, MultiorRole) {
   }
   let amount = getValidatedAmount(words[amountOffset]);
   if (amount == null) {
-    message.reply("I don't know how to tip that many LBRY coins...").then(message => message.delete(10000));
+    message
+      .reply("I don't know how to tip that many LBRY coins...")
+      .then(message => message.delete(10000));
     return;
   }
   if (message.mentions.roles.first().id) {
     if (message.mentions.roles.first().members.first().id) {
-      let userIDs = message.mentions.roles.first().members.map(member => member.user.id.replace('!', ''));
+      let userIDs = message.mentions.roles
+        .first()
+        .members.map(member => member.user.id.replace('!', ''));
       for (var i = 0; i < userIDs.length; i++) {
         sendLBC(bot, message, tipper, userIDs[i], amount, prv, MultiorRole);
       }
     } else {
-      message.reply('Sorry, I could not find any users to tip in that role...').then(message => message.delete(10000));
+      message
+        .reply('Sorry, I could not find any users to tip in that role...')
+        .then(message => message.delete(10000));
       return;
     }
   } else {
-    message.reply('Sorry, I could not find any roles in your tip...').then(message => message.delete(10000));
+    message
+      .reply('Sorry, I could not find any roles in your tip...')
+      .then(message => message.delete(10000));
     return;
   }
 }
@@ -262,12 +315,23 @@ function findUserIDsAndAmount(message, words, prv) {
   return [idList, amount];
 }
 
-function sendLBC(bot, message, tipper, recipient, amount, privacyFlag, MultiorRole) {
+function sendLBC(
+  bot,
+  message,
+  tipper,
+  recipient,
+  amount,
+  privacyFlag,
+  MultiorRole
+) {
   getAddress(recipient.toString(), function(err, address) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      lbry.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
+      lbry.sendFrom(tipper, address, Number(amount), 1, null, null, function(
+        err,
+        txId
+      ) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
@@ -310,7 +374,9 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag, MultiorRo
               '\n' +
               'DM me `!tiplbc` for lbcTipper instructions.';
             if (MultiorRole) {
-              bot.channels.get(spamchannel).send('<@' + tipper + '>,' + iiimessage);
+              bot.channels
+                .get(spamchannel)
+                .send('<@' + tipper + '>,' + iiimessage);
             } else {
               message.reply(iiimessage);
             }
