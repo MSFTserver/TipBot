@@ -47,17 +47,52 @@ bot.on('ready', function() {
   }
 });
 
+process.on('uncaughtException', err =>{
+    console.log('uncaughtException: ' + err);
+    process.exit(1); //exit node.js with an error
+});
+
+process.on('unhandledRejection', err =>{
+    console.log('unhandledRejection: ' + err);
+    process.exit(1); //exit node.js with an error
+});
+
+
 bot.on('disconnected', function() {
   console.log('Disconnected!');
+  process.exit(1); //exit node.js with an error
+});
+
+bot.on('error', function(error) {
+  console.log('error: ' + error);
   process.exit(1); //exit node.js with an error
 });
 
 function checkMessageForCommand(msg, isEdit) {
   //check if message is a command
   if (msg.author.id != bot.user.id && msg.content.startsWith(config.prefix)) {
-    console.log(
-      'treating ' + msg.content + ' from ' + msg.author + ' as command'
-    );
+    //check if user is Online
+    if (
+      !msg.author.presence.status ||
+      msg.author.presence.status == 'offline' ||
+      msg.author.presence.status == 'invisible'
+    ) {
+      msg.author
+        .send('Please set your Discord Presence to Online to talk to the bot!')
+        .catch(function(error) {
+          msg.channel
+            .send(
+              msg.author +
+                ', Please enable Direct Messages from server members to communicate fully with our bot, it is located in the user setting area under Privacy & Safety tab, select the option allow direct messages from server members'
+            )
+            .then(
+              msg.channel.send(
+                'Please set your Discord Presence to Online to talk to the Bot!'
+              )
+            );
+          return;
+        });
+    }
     var cmdTxt = msg.content.split(' ')[0].substring(config.prefix.length);
     var suffix = msg.content.substring(
       cmdTxt.length + config.prefix.length + 1
@@ -82,6 +117,9 @@ function checkMessageForCommand(msg, isEdit) {
     }
     if (cmd) {
       // Add permission check here later on ;)
+      console.log(
+        'treating ' + msg.content + ' from ' + msg.author + ' as command'
+      );
       try {
         cmd.process(bot, msg, suffix, isEdit);
       } catch (e) {
@@ -107,9 +145,6 @@ function checkMessageForCommand(msg, isEdit) {
 }
 
 bot.on('message', msg => checkMessageForCommand(msg, false));
-/*bot.on('messageUpdate', (oldMessage, newMessage) => {
-  checkMessageForCommand(newMessage, true);
-});*/
 
 exports.addCommand = function(commandName, commandObject) {
   try {
