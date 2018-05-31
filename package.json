@@ -27,7 +27,7 @@
   "name": "tipbot",
   "version": "1.0.0",
   "description": "Crypto coin tipbot for Discord",
-  "main": "bot/bot.ja",
+  "main": "bot/bot.js",
   "repository": "https://github.com/MSFTserver/TipBot",
   "author": "MSFTserver <MSFTserver@gmail.com>",
   "license": "MIT"
