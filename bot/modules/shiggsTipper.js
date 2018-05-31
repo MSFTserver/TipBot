@@ -1,21 +1,12 @@
-/*
-Simply find and replace instances below with the coin and symbol you want to use!
-search and replace with case sensitivity!!
-example:
-1. proton  = ethereum
-2. Proton   = Ethereum
-3. proton        = eth
-4. PROTON        = ETH
-*/
 'use strict';
 
-const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+const bitcoin = require('bitcoin');
 
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
 config = config.get('protond');
-const proton = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
+const proton = new bitcoin.Client(config);
 
 exports.commands = ['tipproton'];
 exports.tipproton = {

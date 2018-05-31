@@ -1,21 +1,12 @@
-/*
-Simply find and replace instances below with the coin and symbol you want to use!
-search and replace with case sensitivity!!
-example:
-1. ufo  = ethereum
-2. ufo   = Ethereum
-3. ufo        = eth
-4. UFO        = ETH
-*/
 'use strict';
 
-const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+const bitcoin = require('bitcoin');
 
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
 config = config.get('ufod');
-const ufo = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
+const ufo = new bitcoin.Client(config);
 
 exports.commands = ['tipufo'];
 exports.tipufo = {
