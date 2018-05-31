@@ -4,7 +4,7 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 
 let Regex = require('regex'),
   config = require('config'),
-  spamchannel = config.get('moderation').botspamchannel;
+  spamchannels = config.get('moderation').botspamchannels;
 config = config.get('lbryd');
 const lbry = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
 
@@ -24,8 +24,7 @@ exports.tiplbc = {
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
         '**!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n    **<> : Replace with appropriate value.**',
-      channelwarning =
-        'Please use <#' + spamchannel + '> or DMs to talk to bots.';
+      channelwarning = 'Please use <#bot-spam> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help':
         privateorSpamChannel(msg, channelwarning, doHelp, [helpmsg]);
@@ -138,7 +137,12 @@ function doTip(bot, message, tipper, words, helpmsg) {
       .then(message => message.delete(10000));
     return;
   }
-
+  if (!message.mentions.users.first()) {
+    message
+      .reply('Sorry, I could not find a user in your tip...')
+      .then(message => message.delete(10000));
+    return;
+  }
   if (message.mentions.users.first().id) {
     sendLBC(
       bot,
@@ -228,11 +232,15 @@ function getAddress(userId, cb) {
 }
 
 function inPrivateorSpamChannel(msg) {
-  if (msg.channel.type == 'dm' || msg.channel.id === spamchannel) {
+  if (msg.channel.type == 'dm' || isSpam(msg)) {
     return true;
   } else {
     return false;
   }
+}
+
+function isSpam(msg) {
+  return spamchannels.includes(msg.channel.id);
 }
 
 function getValidatedAmount(amount) {

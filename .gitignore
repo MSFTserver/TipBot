@@ -9,6 +9,7 @@ yarn-error.log*
 dist/*
 #configuration
 config/default.json
+ecosystem.config.js
 
 # Runtime data
 pids

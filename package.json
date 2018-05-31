@@ -9,18 +9,17 @@
     "embed-creator": "^1.1.4",
     "jsonpath": "^0.2.12",
     "moment": "^2.20.1",
-    "mongoose": "^4.13.7",
+    "moment-timezone": "^0.5.14",
+    "node-cmd": "^3.0.0",
     "node-config": "^0.0.2",
     "numeral": "^2.0.6",
+    "pm2": "^2.10.2",
     "regex": "^0.1.1",
     "request": "^2.83.0"
   },
   "scripts": {
-    "prettier": "prettier --single-quote true * --write",
-    "build": "babel bot -d dist",
-    "prod": "babel bot -d dist & node dist/bot.js",
-    "lint": "prettier --single-quote true --write bot/**/*.js",
-    "precommit": "prettier --single-quote true --write bot/**/*.js"
+    "prebuild": "call ./windows-install.bat",
+    "rebuild": "git pull origin master && npm install && pm2 delete veronica"
   },
   "devDependencies": {
     "prettier": "1.7.4"
@@ -28,7 +27,7 @@
   "name": "tipbot",
   "version": "1.0.0",
   "description": "Crypto coin tipbot for Discord",
-  "main": "app.js",
+  "main": "bot/bot.ja",
   "repository": "https://github.com/MSFTserver/TipBot",
   "author": "MSFTserver <MSFTserver@gmail.com>",
   "license": "MIT"

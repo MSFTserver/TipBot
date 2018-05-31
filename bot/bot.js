@@ -2,39 +2,82 @@
 
 // Load up libraries
 const Discord = require('discord.js');
+let moment = require('moment-timezone');
 // Load config!
 let config = require('config');
+let logChannel = config.get('moderation').logchannel;
+let pm2Name = config.get('moderation').pm2Name;
 config = config.get('bot');
 
 var aliases;
+// check if any aliases are defined
 try {
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
   aliases = require('./alias.json');
-  console.log('aliases:');
-  console.log(aliases);
+  console.log('[' + time + ' PST][' + pm2Name + '] ' + Object.keys(aliases).length + ' aliases Loaded!');
 } catch (e) {
-  console.log('No aliases defined');
-  //No aliases defined
-  aliases = {
-    test: {
-      process: function(bot, msg) {
-        msg.channel.send('test');
-        console.log('test');
-      }
-    }
-  };
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
+  console.log('[' + time + ' PST][' + pm2Name + '] No aliases defined');
 }
 var commands = {};
 
 var bot = new Discord.Client();
 
 bot.on('ready', function() {
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
   console.log(
-    'Logged in! Serving in ' + bot.guilds.array().length + ' servers'
+    '[' +
+      time +
+      ' PST][' +
+      pm2Name +
+      '] ' +
+      bot.user.username +
+      'Logged in! Serving in ' +
+      bot.guilds.array().length +
+      ' servers'
   );
+  bot.channels
+    .get(logChannel)
+    .send(
+      '[' +
+        time +
+        ' PST][' +
+        pm2Name +
+        '] ' +
+        bot.user.username +
+        'Logged in! Serving in ' +
+        bot.guilds.array().length +
+        ' servers'
+    );
   require('./plugins.js').init();
-  console.log('type ' + config.prefix + 'help in Discord for a commands list.');
+  console.log(
+    '[' +
+      time +
+      ' PST][' +
+      pm2Name +
+      '] type ' +
+      config.prefix +
+      'tiphelp in Discord for a commands list.'
+  );
+  bot.channels
+    .get(logChannel)
+    .send(
+      '[' +
+        time +
+        ' PST][' +
+        pm2Name +
+        '] type ' +
+        config.prefix +
+        'tiphelp in Discord for a commands list.'
+    );
   bot.user.setActivity(config.prefix + 'Intialized!');
-  var text = ['tiprvn', 'tipdoge', 'tiplbc'];
+  var text = ['tiprvn', 'tipdoge', 'tiplbc', 'tiphelp'];
   var counter = 0;
   setInterval(change, 10000);
 
@@ -47,24 +90,41 @@ bot.on('ready', function() {
   }
 });
 
-process.on('uncaughtException', err =>{
-    console.log('uncaughtException: ' + err);
-    process.exit(1); //exit node.js with an error
+process.on('uncaughtException', err => {
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
+  console.log('[' + time + ' PST][' + pm2Name + '] uncaughtException: ' + err);
+  bot.channels
+    .get(logChannel)
+    .send('[' + time + ' PST][' + pm2Name + '] uncaughtException: ' + err);
+  process.exit(1); //exit node.js with an error
 });
 
-process.on('unhandledRejection', err =>{
-    console.log('unhandledRejection: ' + err);
-    process.exit(1); //exit node.js with an error
+process.on('unhandledRejection', err => {
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
+  console.log('[' + time + ' PST][' + pm2Name + '] unhandledRejection: ' + err);
+  bot.channels
+    .get(logChannel)
+    .send('[' + time + ' PST][' + pm2Name + '] unhandledRejection: ' + err);
+  process.exit(1); //exit node.js with an error
 });
-
 
 bot.on('disconnected', function() {
-  console.log('Disconnected!');
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
+  console.log('[' + time + ' PST][' + pm2Name + '] Disconnected!');
   process.exit(1); //exit node.js with an error
 });
 
 bot.on('error', function(error) {
-  console.log('error: ' + error);
+  var time = moment()
+    .tz('America/Los_Angeles')
+    .format('MM-DD-YYYY hh:mm a');
+  console.log('[' + time + ' PST][' + pm2Name + '] error: ' + error);
   process.exit(1); //exit node.js with an error
 });
 
@@ -118,16 +178,26 @@ function checkMessageForCommand(msg, isEdit) {
     if (cmd) {
       // Add permission check here later on ;)
       console.log(
-        'treating ' + msg.content + ' from ' + msg.author + ' as command'
+        'treating ' +
+          msg.content +
+          ' from ' +
+          msg.author.username +
+          ' as command'
       );
       try {
         cmd.process(bot, msg, suffix, isEdit);
       } catch (e) {
         var msgTxt = 'command ' + cmdTxt + ' failed :(';
+        var linebreak = '\n-------------------------------------------------\n';
         if (config.debug) {
           msgTxt += '\n' + e.stack;
         }
-        msg.channel.send(msgTxt);
+        var time = moment()
+          .tz('America/Los_Angeles')
+          .format('MM-DD-YYYY hh:mm a');
+        bot.channels
+          .get(logChannel)
+          .send('[' + time + ' PST][' + pm2Name + '] ' + msgTxt + linebreak);
       }
     }
   } else {
@@ -150,14 +220,28 @@ exports.addCommand = function(commandName, commandObject) {
   try {
     commands[commandName] = commandObject;
   } catch (err) {
-    console.log(err);
+    var time = moment()
+      .tz('America/Los_Angeles')
+      .format('MM-DD-YYYY hh:mm a');
+    console.log('[' + time + ' PST][' + pm2Name + '] Error addCommand: ' + err);
+    bot.channels
+      .get(logChannel)
+      .send('[' + time + ' PST][' + pm2Name + '] Error addCommand: ' + err);
   }
 };
 exports.addCustomFunc = function(customFunc) {
   try {
     customFunc(bot);
   } catch (err) {
-    console.log(err);
+    var time = moment()
+      .tz('America/Los_Angeles')
+      .format('MM-DD-YYYY hh:mm a');
+    console.log(
+      '[' + time + ' PST][' + pm2Name + '] Error addCustomFunc: ' + err
+    );
+    bot.channels
+      .get(logChannel)
+      .send('[' + time + ' PST][' + pm2Name + '] Error addCustomFunc: ' + err);
   }
 };
 exports.commandCount = function() {

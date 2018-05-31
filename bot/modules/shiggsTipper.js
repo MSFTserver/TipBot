@@ -1,3 +1,12 @@
+/*
+Simply find and replace instances below with the coin and symbol you want to use!
+search and replace with case sensitivity!!
+example:
+1. proton  = ethereum
+2. Proton   = Ethereum
+3. proton        = eth
+4. PROTON        = ETH
+*/
 'use strict';
 
 const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
@@ -5,14 +14,14 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-config = config.get('doged');
-const doge = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
+config = config.get('protond');
+const proton = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
 
-exports.commands = ['tipdoge'];
-exports.tipdoge = {
+exports.commands = ['tipproton'];
+exports.tipproton = {
   usage: '<subcommand>',
   description:
-    '**!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.',
+    '**!tipproton** : Displays This Message\n    **!tipproton balance** : get your balance\n    **!tipproton deposit** : get address for your deposits\n    **!tipproton withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipproton <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipproton private <user> <amount>** : put private before Mentioning a user to tip them privately.',
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
       words = msg.content
@@ -23,7 +32,7 @@ exports.tipdoge = {
         }),
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
-        '**!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n    **<> : Replace with appropriate value.**',
+        '**!tipproton** : Displays This Message\n    **!tipproton balance** : get your balance\n    **!tipproton deposit** : get address for your deposits\n    **!tipproton withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipproton <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipproton private <user> <amount>** : put private before Mentioning a user to tip them privately.\n    **<> : Replace with appropriate value.**',
       channelwarning = 'Please use <#bot-spam> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help':
@@ -36,11 +45,7 @@ exports.tipdoge = {
         privateorSpamChannel(msg, channelwarning, doDeposit, [tipper]);
         break;
       case 'withdraw':
-        privateorSpamChannel(msg, channelwarning, doWithdraw, [
-          tipper,
-          words,
-          helpmsg
-        ]);
+        privateorSpamChannel(msg, channelwarning, doWithdraw, [tipper, words, helpmsg]);
         break;
       default:
         doTip(bot, msg, tipper, words, helpmsg);
@@ -61,13 +66,11 @@ function doHelp(message, helpmsg) {
 }
 
 function doBalance(message, tipper) {
-  doge.getBalance(tipper, 1, function(err, balance) {
+  proton.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message
-        .reply('Error getting Doge balance.')
-        .then(message => message.delete(10000));
+      message.reply('Error getting Proton balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* DOGE');
+      message.reply('You have *' + balance + '* PROTON');
     }
   });
 }
@@ -75,11 +78,9 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message
-        .reply('Error getting your Doge deposit address.')
-        .then(message => message.delete(10000));
+      message.reply('Error getting your Proton deposit address.').then(message => message.delete(10000));
     } else {
-      message.reply('Your Doge (DOGE) address is ' + address);
+      message.reply('Your Proton (PROTON) address is ' + address);
     }
   });
 }
@@ -94,25 +95,15 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message
-      .reply("I don't know how to withdraw that many Doge coins...")
-      .then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that many Proton coins...").then(message => message.delete(10000));
     return;
   }
 
-  doge.sendFrom(tipper, address, Number(amount), function(err, txId) {
+  proton.sendFrom(tipper, address, Number(amount), function(err, txId) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      message.reply(
-        'You withdrew ' +
-          amount +
-          ' DOGE to ' +
-          address +
-          '\n' +
-          txLink(txId) +
-          '\n'
-      );
+      message.reply('You withdrew ' + amount + ' PROTON to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
@@ -132,42 +123,28 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message
-      .reply("I don't know how to tip that many Doge coins...")
-      .then(message => message.delete(10000));
+    message.reply("I don't know how to tip that many Proton coins...").then(message => message.delete(10000));
     return;
   }
-  if (!message.mentions.users.first()) {
-    message
-      .reply('Sorry, I could not find a user in your tip...')
-      .then(message => message.delete(10000));
-    return;
-  }
+  if (!message.mentions.users.first()){
+       message
+        .reply('Sorry, I could not find a user in your tip...')
+        .then(message => message.delete(10000));
+        return;
+      }
   if (message.mentions.users.first().id) {
-    sendDOGE(
-      bot,
-      message,
-      tipper,
-      message.mentions.users.first().id.replace('!', ''),
-      amount,
-      prv
-    );
+    sendPROTON(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
   } else {
-    message
-      .reply('Sorry, I could not find a user in your tip...')
-      .then(message => message.delete(10000));
+    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
   }
 }
 
-function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
+function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
   getAddress(recipient.toString(), function(err, address) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      doge.sendFrom(tipper, address, Number(amount), 1, null, null, function(
-        err,
-        txId
-      ) {
+      proton.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
@@ -176,23 +153,25 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' DOGE\n' +
+              ' PROTON\n' +
               txLink(txId) +
               '\n' +
-              'DM me `!tipdoge` for dogeTipper instructions.';
+              'DM me `!tipproton` for protonTipper instructions.';
             userProfile.user.send(iimessage);
             var imessage =
               ' You privately tipped ' +
               userProfile.user.username +
               ' ' +
               amount +
-              ' DOGE\n' +
+              ' PROTON\n' +
               txLink(txId) +
               '\n' +
-              'DM me `!tipdoge` for dogeTipper instructions.';
+              'DM me `!tipproton` for protonTipper instructions.';
             message.author.send(imessage);
 
-            if (message.content.startsWith('!tipdoge private ')) {
+            if (
+              message.content.startsWith('!tipproton private ')
+            ) {
               message.delete(1000); //Supposed to delete message
             }
           } else {
@@ -201,11 +180,11 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' DOGE\n' +
+              ' PROTON\n' +
               txLink(txId) +
               '\n' +
-              'DM me `!tipdoge` for dogeTipper instructions.';
-            message.reply(iiimessage);
+              'DM me `!tipproton` for protonTipper instructions.';
+              message.reply(iiimessage);
           }
         }
       });
@@ -214,13 +193,13 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
 }
 
 function getAddress(userId, cb) {
-  doge.getAddressesByAccount(userId, function(err, addresses) {
+  proton.getAddressesByAccount(userId, function(err, addresses) {
     if (err) {
       cb(err);
     } else if (addresses.length > 0) {
       cb(null, addresses[0]);
     } else {
-      doge.getNewAddress(userId, function(err, address) {
+      proton.getNewAddress(userId, function(err, address) {
         if (err) {
           cb(err);
         } else {
@@ -241,16 +220,17 @@ function inPrivateorSpamChannel(msg) {
 
 function isSpam(msg) {
   return spamchannels.includes(msg.channel.id);
-}
+};
+
 
 function getValidatedAmount(amount) {
   amount = amount.trim();
-  if (amount.toLowerCase().endsWith('doge')) {
+  if (amount.toLowerCase().endsWith('proton')) {
     amount = amount.substring(0, amount.length - 3);
   }
   return amount.match(/^[0-9]+(\.[0-9]+)?$/) ? amount : null;
 }
 
 function txLink(txId) {
-  return 'https://dogechain.info/tx/' + txId;
+  return 'http://Explorer-Url/tx/' + txId;
 }

@@ -20,12 +20,25 @@
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
   },
-  "mongodb": {
-      "url":"mongodb://localhost:27017/TipBot"
+  "protond": {
+    "port": 3338,
+    "user": "username",
+    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  },
+  "ufod": {
+    "port": 3338,
+    "user": "username",
+    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
   },
   "moderation":{
-  "perms": ["Community Leader","RVNMOD","Community Admin","Admin"], // Roles that have access to all commands.
-  "logchannel": "410638358390243340", // Channel to log the bots moderation..
-  "botspamchannel": "409219997735452672" //channel that the tip message will reply in if Multi or Role tip is used.
+  "pm2Name": "TipBot",
+   // Roles that have access to all commands.
+  "perms": ["Admin","Moderator","Community Leader","Bots"],
+  // Bot Devs!
+  "botDev": "Bot Developer",
+  // Channel to log the bots moderation..
+  "logchannel": "429853685179351050",
+  //channel that the tip message will reply in if Multi or Role tip is used.
+  "botspamchannels": ["429134627823812612", "429852470886268929"]
   }
 }
