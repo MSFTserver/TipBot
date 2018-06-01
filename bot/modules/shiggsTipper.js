@@ -61,7 +61,7 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Proton (PROTON) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* Proton (PROTON)');
+      message.reply('You have **' + balance + '** Proton (PROTON)');
     }
   });
 }

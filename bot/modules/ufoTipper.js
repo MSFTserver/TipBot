@@ -61,7 +61,7 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Uniform Fiscal Object (UFO) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* Uniform Fiscal Object (UFO) coins');
+      message.reply('You have **' + balance + '** Uniform Fiscal Object (UFO)');
     }
   });
 }

@@ -67,7 +67,7 @@ function doBalance(message, tipper) {
         .reply('Error getting Dogecoin (DOGE) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* Dogecoin (DOGE)');
+      message.reply('You have **' + balance + '** Dogecoin (DOGE)');
     }
   });
 }

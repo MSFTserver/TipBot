@@ -67,7 +67,7 @@ function doBalance(message, tipper) {
         .reply('Error getting Ravencoin (RVN) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* Ravencoin (RVN)');
+      message.reply('You have **' + balance + '** Ravencoin (RVN)');
     }
   });
 }

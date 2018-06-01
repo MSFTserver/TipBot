@@ -67,7 +67,7 @@ function doBalance(message, tipper) {
         .reply('Error getting LBRY Credit (LBC) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* LBRY Credit (LBC)');
+      message.reply('You have **' + balance + '** LBRY Credit (LBC)');
     }
   });
 }
