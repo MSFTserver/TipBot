@@ -252,5 +252,5 @@ function getValidatedAmount(amount) {
 }
 
 function txLink(txId) {
-  return 'https://rvn.hash4.life/tx/' + txId;
+  return 'https://ravencoin.network/tx/' + txId;
 }

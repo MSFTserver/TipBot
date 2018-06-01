@@ -223,5 +223,5 @@ function getValidatedAmount(amount) {
 }
 
 function txLink(txId) {
-  return 'http://Explorer-Url/tx/' + txId;
+  return 'https://chainz.cryptoid.info/ufo/tx.dws?' + txId;
 }
