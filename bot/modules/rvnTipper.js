@@ -64,10 +64,10 @@ function doBalance(message, tipper) {
   raven.getBalance(tipper, 1, function(err, balance) {
     if (err) {
       message
-        .reply('Error getting Raven balance.')
+        .reply('Error getting Ravencoin (RVN) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* RVN');
+      message.reply('You have *' + balance + '* Ravencoin (RVN)');
     }
   });
 }
@@ -76,10 +76,10 @@ function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
       message
-        .reply('Error getting your Raven deposit address.')
+        .reply('Error getting your Ravencoin (RVN) deposit address.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('Your Raven (RVN) address is ' + address);
+      message.reply('Your Ravencoin (RVN) address is ' + address);
     }
   });
 }
@@ -95,7 +95,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to withdraw that many Raven coins...")
+      .reply("I don't know how to withdraw that much Ravencoin (RVN)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -107,7 +107,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
       message.reply(
         'You withdrew ' +
           amount +
-          ' RVN to ' +
+          ' Ravencoin (RVN) to ' +
           address +
           '\n' +
           txLink(txId) +
@@ -133,7 +133,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to tip that many Raven coins...")
+      .reply("I don't know how to tip that much Ravencoin (RVN)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -176,7 +176,7 @@ function sendRVN(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' RVN\n' +
+              ' Ravencoin (RVN)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiprvn` for rvnTipper instructions.';
@@ -186,7 +186,7 @@ function sendRVN(bot, message, tipper, recipient, amount, privacyFlag) {
               userProfile.user.username +
               ' ' +
               amount +
-              ' RVN\n' +
+              ' Ravencoin (RVN)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiprvn` for rvnTipper instructions.';
@@ -201,7 +201,7 @@ function sendRVN(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' RVN\n' +
+              ' Ravencoin (RVN)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiprvn` for rvnTipper instructions.';

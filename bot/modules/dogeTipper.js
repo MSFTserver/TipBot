@@ -64,10 +64,10 @@ function doBalance(message, tipper) {
   doge.getBalance(tipper, 1, function(err, balance) {
     if (err) {
       message
-        .reply('Error getting Doge balance.')
+        .reply('Error getting Dogecoin (DOGE) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* DOGE');
+      message.reply('You have *' + balance + '* Dogecoin (DOGE)');
     }
   });
 }
@@ -76,10 +76,10 @@ function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
       message
-        .reply('Error getting your Doge deposit address.')
+        .reply('Error getting your Dogecoin (DOGE) deposit address.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('Your Doge (DOGE) address is ' + address);
+      message.reply('Your Dogecoin (DOGE) address is ' + address);
     }
   });
 }
@@ -95,7 +95,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to withdraw that many Doge coins...")
+      .reply("I don't know how to withdraw that many Dogecoin (DOGE)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -107,7 +107,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
       message.reply(
         'You withdrew ' +
           amount +
-          ' DOGE to ' +
+          ' Dogecoin (DOGE) to ' +
           address +
           '\n' +
           txLink(txId) +
@@ -133,7 +133,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to tip that many Doge coins...")
+      .reply("I don't know how to tip that many Dogecoin (DOGE)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -176,7 +176,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' DOGE\n' +
+              ' Dogecoin (DOGE)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipdoge` for dogeTipper instructions.';
@@ -186,7 +186,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
               userProfile.user.username +
               ' ' +
               amount +
-              ' DOGE\n' +
+              ' Dogecoin (DOGE)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipdoge` for dogeTipper instructions.';
@@ -201,7 +201,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' DOGE\n' +
+              ' Dogecoin (DOGE)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipdoge` for dogeTipper instructions.';

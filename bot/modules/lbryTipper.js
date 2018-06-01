@@ -64,10 +64,10 @@ function doBalance(message, tipper) {
   lbry.getBalance(tipper, 1, function(err, balance) {
     if (err) {
       message
-        .reply('Error getting LBRY balance.')
+        .reply('Error getting LBRY Credit (LBC) balance.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* LBC');
+      message.reply('You have *' + balance + '* LBRY Credit (LBC)');
     }
   });
 }
@@ -76,10 +76,10 @@ function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
       message
-        .reply('Error getting your LBRY deposit address.')
+        .reply('Error getting your LBRY Credit (LBC) deposit address.')
         .then(message => message.delete(10000));
     } else {
-      message.reply('Your LBRY (LBC) address is ' + address);
+      message.reply('Your LBRY Credit (LBC) address is ' + address);
     }
   });
 }
@@ -95,7 +95,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to withdraw that many LBRY coins...")
+      .reply("I don't know how to withdraw that much LBRY Credit (LBC)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -107,7 +107,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
       message.reply(
         'You withdrew ' +
           amount +
-          ' LBC to ' +
+          ' LBRY Credit (LBC) to ' +
           address +
           '\n' +
           txLink(txId) +
@@ -133,7 +133,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
 
   if (amount === null) {
     message
-      .reply("I don't know how to tip that many LBRY coins...")
+      .reply("I don't know how to tip that much LBRY Credit (LBC)...")
       .then(message => message.delete(10000));
     return;
   }
@@ -176,7 +176,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' LBC\n' +
+              ' LBRY Credit (LBC)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiplbc` for lbcTipper instructions.';
@@ -186,7 +186,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
               userProfile.user.username +
               ' ' +
               amount +
-              ' LBC\n' +
+              ' LBRY Credit (LBC)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiplbc` for lbcTipper instructions.';
@@ -201,7 +201,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' LBC\n' +
+              ' LBRY Credit (LBC)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tiplbc` for lbcTipper instructions.';

@@ -59,9 +59,9 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   proton.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Proton balance.').then(message => message.delete(10000));
+      message.reply('Error getting Proton (PROTON) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* PROTON');
+      message.reply('You have *' + balance + '* Proton (PROTON)');
     }
   });
 }
@@ -69,7 +69,7 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your Proton deposit address.').then(message => message.delete(10000));
+      message.reply('Error getting your Proton (PROTON) deposit address.').then(message => message.delete(10000));
     } else {
       message.reply('Your Proton (PROTON) address is ' + address);
     }
@@ -86,7 +86,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many Proton coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that much Proton (PROTON)...").then(message => message.delete(10000));
     return;
   }
 
@@ -94,7 +94,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      message.reply('You withdrew ' + amount + ' PROTON to ' + address + '\n' + txLink(txId) + '\n');
+      message.reply('You withdrew ' + amount + ' Proton (PROTON) to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
@@ -114,7 +114,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many Proton coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to tip that much Proton (PROTON)...").then(message => message.delete(10000));
     return;
   }
   if (!message.mentions.users.first()){
@@ -144,7 +144,7 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' PROTON\n' +
+              ' Proton (PROTON)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipproton` for protonTipper instructions.';
@@ -154,7 +154,7 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
               userProfile.user.username +
               ' ' +
               amount +
-              ' PROTON\n' +
+              ' Proton (PROTON)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipproton` for protonTipper instructions.';
@@ -171,7 +171,7 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' PROTON\n' +
+              ' Proton (PROTON)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipproton` for protonTipper instructions.';

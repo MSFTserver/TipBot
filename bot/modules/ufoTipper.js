@@ -59,9 +59,9 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   ufo.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting ufo balance.').then(message => message.delete(10000));
+      message.reply('Error getting Uniform Fiscal Object (UFO) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* UFO');
+      message.reply('You have *' + balance + '* Uniform Fiscal Object (UFO) coins');
     }
   });
 }
@@ -69,9 +69,9 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your ufo deposit address.').then(message => message.delete(10000));
+      message.reply('Error getting your Uniform Fiscal Object (UFO) deposit address.').then(message => message.delete(10000));
     } else {
-      message.reply('Your ufo (UFO) address is ' + address);
+      message.reply('Your Uniform Fiscal Object (UFO) address is ' + address);
     }
   });
 }
@@ -86,7 +86,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many ufo coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that much Uniform Fiscal Object (UFO)...").then(message => message.delete(10000));
     return;
   }
 
@@ -94,7 +94,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      message.reply('You withdrew ' + amount + ' UFO to ' + address + '\n' + txLink(txId) + '\n');
+      message.reply('You withdrew ' + amount + ' Uniform Fiscal Object (UFO) coins to ' + address + '\n' + txLink(txId) + '\n');
     }
   });
 }
@@ -114,7 +114,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many ufo coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to tip that much Uniform Fiscal Object (UFO)...").then(message => message.delete(10000));
     return;
   }
   if (!message.mentions.users.first()){
@@ -144,7 +144,7 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
             var iimessage =
               ' You got privately tipped ' +
               amount +
-              ' UFO\n' +
+              ' Uniform Fiscal Object (UFO)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipufo` for ufoTipper instructions.';
@@ -154,7 +154,7 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
               userProfile.user.username +
               ' ' +
               amount +
-              ' UFO\n' +
+              ' Uniform Fiscal Object (UFO)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipufo` for ufoTipper instructions.';
@@ -171,7 +171,7 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
               recipient +
               '> ' +
               amount +
-              ' UFO\n' +
+              ' Uniform Fiscal Object (UFO)\n' +
               txLink(txId) +
               '\n' +
               'DM me `!tipufo` for ufoTipper instructions.';
