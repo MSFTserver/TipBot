@@ -1,4 +1,4 @@
-let cmd = require('node-cmd');
+/*let cmd = require('node-cmd');
 let moment = require('moment-timezone');
 let config = require('config');
 let botDev = config.get('moderation').botDev;
@@ -30,3 +30,4 @@ exports.shutdown = {
     }
   }
 };
+*/
