@@ -11,6 +11,8 @@ Features:
     - LBRY Credits (LBC)
     - Uniform Fiscal Object (UFO)
     - ~~Proton (PROTON)~~ Higgs(PROTON)
+    - Phoenixcoin (PXC)
+    - Feathercoin (FTC)
 
 
 ## Create a Bot
