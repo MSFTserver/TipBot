@@ -1,4 +1,4 @@
-# Bot for Discord communties to facilitate crypto coin tipping!
+# Bot for Discord communities to facilitate crypto coin tipping!
 (This README will be updated along with bot updates)
 Features:
 
@@ -19,13 +19,13 @@ Features:
 
 1) Create a bot and get the bots Token and Client ID: https://discordapp.com/developers/applications/me
 
-    1) After going to the link above click “new application”. Give it a name, picture and description.
+    1) After going to the link above click “new application”. Give it a name, picture, and description.
 
     2) Click “Create Bot User” and click “Yes, Do It!” when the dialog pops up.
 
     3) Copy down the token used to login and Client ID to invite your new bot to your discord server.
 
-2) invite the bot to your server using the link below and entering the Client ID or generate your own [Here :link:](https://discordapi.com/permissions.html)
+2) invite the bot to your server using the link below and entering the Client ID or generate your own [Here:link:](https://discordapi.com/permissions.html)
 
 ```
 https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bot&permissions=27648
@@ -47,7 +47,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
 
     (you can add more coins by following this format and using the `exampleTipper.js` file in `/bot/modules`)
 
-3) setup the wallets config file
+3) set up the wallets config file
 
     1) In most cases, your wallets data folder can be found in `%appdata%`
 
@@ -68,7 +68,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
         rpcworkqueue=1000
         ```
 
-        1) NOTE: if you are using a masternode coin you also need to add these extra option into your wallets config file
+        1) NOTE: if you are using a master node coin you also need to add these extra options into your wallets config file
 
           ```
           staking=0
@@ -104,14 +104,14 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
 
 2) After the above tools have been installed run `npm install` in the bots root directory.
 
-    1) this may throw some errors on some systems not all packages are required for some systems, the bot will still run unless its a absolutely needed dependency.
+    1) this may throw some errors on some systems not all packages are required for some systems, the bot will still run unless it's an absolutely needed dependency.
 
 3) start the bot with `yarn start` or `pm2 start ecosystem.config.js` in the bots root directory
 
 ### Development
 
 Be sure to run the command below before working on any code, this ensures
-prettier goes to work and keeps code to our standard.
+prettier goes to work and keeps the code to our standard.
 
 ```
 yarn install --production=false
