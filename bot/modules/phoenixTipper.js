@@ -223,5 +223,5 @@ function getValidatedAmount(amount) {
 }
 
 function txLink(txId) {
-  return '' + txId;
+  return 'http://explorer.phoenixcoin.org/tx/' + txId;
 }
