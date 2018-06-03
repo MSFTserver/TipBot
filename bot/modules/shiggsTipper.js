@@ -5,7 +5,7 @@ const bitcoin = require('bitcoin');
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-config = config.get('protond');
+let config = config.get('protond');
 const proton = new bitcoin.Client(config);
 
 exports.commands = ['tipproton'];

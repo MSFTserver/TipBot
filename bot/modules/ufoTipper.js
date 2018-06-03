@@ -5,7 +5,7 @@ const bitcoin = require('bitcoin');
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-config = config.get('ufod');
+let config = config.get('ufod');
 const ufo = new bitcoin.Client(config);
 
 exports.commands = ['tipufo'];

@@ -5,7 +5,7 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-config = config.get('ravend');
+let config = config.get('ravend');
 const raven = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
 
 exports.commands = ['tiprvn'];

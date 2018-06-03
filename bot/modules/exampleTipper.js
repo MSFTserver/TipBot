@@ -2,7 +2,7 @@
 Simply find and replace instances below with the coin and symbol you want to use!
 search and replace with case sensitivity!!
 example:
-1. lightcoin  = ethereum
+1. litecoin   = ethereum
 2. Litecoin   = Ethereum
 3. ltc        = eth
 4. LTC        = ETH
@@ -16,7 +16,7 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-config = config.get('litecoind');
+let config = config.get('litecoind');
 const litecoin = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
 
 exports.commands = ['tipltc'];
