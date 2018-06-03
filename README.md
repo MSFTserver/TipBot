@@ -12,117 +12,99 @@ Features:
     - Uniform Fiscal Object (UFO)
     - ~~Proton (PROTON)~~ Higgs(PROTON)
 
-## Auto-Installation
 
-for Windows Users Only!
+## Create a Bot
 
-Create a bot and get the bot's API Token:
-https://discordapp.com/developers/applications/me
+1) Create a bot and get the bots Token and Client ID: https://discordapp.com/developers/applications/me
 
-make sure you have setup your wallet config properly to facilitate this bot
+    1) After going to the link above click “new application”. Give it a name, picture and description.
 
-wallets data folder can be found in %appdata% (default Roaming Folder):
+    2) Click “Create Bot User” and click “Yes, Do It!” when the dialog pops up.
 
-```
-server=1
-par=1
-rpcbind=127.0.0.1
-rpcallowip=127.0.0.1
-rpcport=3335
-rpcuser=<Same-as-you-set-in-config.json>
-rpcpassword=<Same-as-you-set-in-config.json>
-rpcclienttimeout=30
-rpcthreads=<Number-of-Threads>
-rpcworkqueue=1000
-```
+    3) Copy down the token used to login and Client ID to invite your new bot to your discord server.
 
-NOTE: if you are using a masternode coin you also need to add these to extra option into your wallets config file
+2) invite the bot to your server using the link below and entering the Client ID or generate your own [Here :link:](https://discordapi.com/permissions.html)
 
 ```
-staking=0
-enableaccounts=1
+https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bot&permissions=27648
 ```
 
-edit and rename default.json.example in /config to default.json
+## Edit Files
 
-edit the following according to your wallets config options set in the previous step:
+1) Edit and rename `ecosystem.json.js.example` to `ecosystem.json.js` in the root folder to match the correct directories for log files and bot root folder.
 
-(you can add more coins by following this format and using the exampleTipper.js)
+2) Edit and rename `default.json.example` to `default.json` in `/config`. You will use the same info in the next step.
 
-```
-"ravend": {
-    "port": 3335,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
-},
-```
+    ```
+    "ravend": {
+        "port": 3335,
+        "user": "username",
+        "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    },
+    ```
 
-to start the install run the windows-install.bat file!
+    (you can add more coins by following this format and using the `exampleTipper.js` file in `/bot/modules`)
 
-before you start the file make sure the directories in ecosystem.config.js, you have to rename the old one from ecosystem.config.js.example to the file name above, properly match those of the project your deploying!
+3) setup the wallets config file
 
-and finally `pm2 start ecosystem.config.js`
+    1) In most cases, your wallets data folder can be found in `%appdata%`
 
-ENJOY!
+        (default Roaming Folder), `e.g. C:\Users\USER\AppData\Roaming\COIN.`
 
-## Manual-Installation
+    2) Edit or create your `COIN.conf` file (Where "COIN" is the coin name) to include the following:
 
-## Requirements
+        ```
+        server=1
+        par=1
+        rpcbind=127.0.0.1
+        rpcallowip=127.0.0.1
+        rpcport=3335
+        rpcuser=<Same-as-you-set-in-config.json>
+        rpcpassword=<Same-as-you-set-in-config.json>
+        rpcclienttimeout=30
+        rpcthreads=<Number-of-Threads>
+        rpcworkqueue=1000
+        ```
 
-- node > 8.0.0
-- npm > 0.12.x
-- yarn ( install with npm install -g yarn if not installed )
+        1) NOTE: if you are using a masternode coin you also need to add these to extra option into your wallets config file
 
-## Installation
+          ```
+          staking=0
+          enableaccounts=1
+          ```
 
-Download the respective coins wallet that uses bitcoind (aka bitcoin-qt).
+## Install Bot
 
-Create a bot and get the bot's Token: https://discordapp.com/developers/applications/me
+### Auto - Windows
 
-make sure you have setup your wallet config properly to facilitate this bot
+1) run the `windows-install.bat` file to install needed tools, Not on windows or don't want to auto install follow the instructions below for manual Installation.
 
-wallet folder found in %appdata% (default Roaming Folder):
+2) verify the following tools are installed by running the commands below in cmd:
 
-```
-server=1
-par=1
-rpcbind=127.0.0.1
-rpcallowip=127.0.0.1
-rpcport=3335
-rpcuser=<Same-as-you-set-in-config.json>
-rpcpassword=<Same-as-you-set-in-config.json>
-rpcclienttimeout=30
-rpcthreads=<Number-of-Threads>
-rpcworkqueue=1000
-```
+      * git - `git --version`
+      * node - `node -v`
+        * npm - `npm -v`
+          * pm2 - `pm2 -v`
+          * yarn - `yarn --version`
 
-NOTE: if you are using a masternode coin you also need to add these to extra option into your wallets config file
+3) start the bot with `yarn start` or `pm2 start ecosystem.config.js` in the bots root directory
 
-```
-staking=0
-enableaccounts=1
-```
+    1) if the bot fails to start and throws missing npm package errors simply run `npm install` again in the bots root directory
 
-rename default.json.example in /config to default.json
+### Manual - Linux/Mac
 
-edit the following according to your wallets config options set in the previous step:
+1) Download and install the required tools listed below:
+      * [git > 2.0.0](https://git-scm.com/downloads)
+      * [node > 8.0.0](https://nodejs.org/en/)
+        * [npm > 0.12.x](https://nodejs.org/en/)
+          * [pm2 > latest](http://pm2.keymetrics.io/)
+          * [yarn > latest](https://yarnpkg.com/en/docs/install)
 
-(you can add more coins by following this format and using the exampleTipper.js)
+2) After the above tools have been installed run `npm install` in the bots root directory.
 
-```
-"ravend": {
-    "port": 3335,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
-},
-```
+    1) this may throw some errors on some systems not all packages are required for some systems, the bot will still run unless its a absolutely needed dependency.
 
-then run:
-
-```
-npm install
-pm2 start ecosystem.config.js
-```
+3) start the bot with `yarn start` or `pm2 start ecosystem.config.js` in the bots root directory
 
 ### Development
 
