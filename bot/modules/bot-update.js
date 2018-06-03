@@ -22,7 +22,11 @@ exports.update = {
       bot.channels
         .get(logChannel)
         .send('[' + time + ' PST][' + pm2Name + '] Updating pm2 app');
-      cmd.run('pm2 reload ' + pm2Name);
+      cmd.run(
+          'cd ' +
+            botDir +
+            ' git pull origin master && npm install && pm2 update all'
+        );
     }
     // Checks if user is an Bot Dev!
     function isBotDev(msg) {
