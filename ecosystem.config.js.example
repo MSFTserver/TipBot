@@ -3,12 +3,12 @@ module.exports = {
     {
       name: 'TipBot',
       script: './bot/bot.js',
-      cwd: 'C:/Users/RavenDev/Desktop/Bots/Veronica',
+      cwd: 'Location-of-Bot-Dir',
       instance_id_env: '0',
-      log_date_format: 'MMMM Do YYYY, h:mm:ss a',
+      watch: true,
       error_file:
-        'C:/Users/RavenDev/Desktop/Bots/Veronica/Logs/veronica-err.log',
-      out_file: 'C:/Users/RavenDev/Desktop/Bots/Veronica/Logs/veronica-out.log',
+        'Location-of-Bot-Dir/Logs/tipbot-err.log',
+      out_file: 'Location-of-Bot-Dir/Logs/tipbot-out.log',
       env: {
         NODE_ENV: 'development'
       },

@@ -18,8 +18,9 @@
     "request": "^2.83.0"
   },
   "scripts": {
-    "prebuild": "call ./windows-install.bat",
-    "rebuild": "git pull origin master && npm install && pm2 delete veronica"
+    "precommit": "prettier --single-quote true --write bot/**/*.js",
+    "rebuild": "git pull origin master && npm install && update all",
+    "start":  "pm2 start ecosystem.json.js"
   },
   "devDependencies": {
     "prettier": "1.7.4"
