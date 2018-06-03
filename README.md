@@ -68,7 +68,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
         rpcworkqueue=1000
         ```
 
-        1) NOTE: if you are using a masternode coin you also need to add these to extra option into your wallets config file
+        1) NOTE: if you are using a masternode coin you also need to add these extra option into your wallets config file
 
           ```
           staking=0
