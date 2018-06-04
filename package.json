@@ -20,7 +20,7 @@
   "scripts": {
     "precommit": "prettier --single-quote true --write bot/**/*.js",
     "rebuild": "git pull origin master && npm install && update all",
-    "start":  "pm2 start ecosystem.json.js"
+    "start":  "pm2 start ecosystem.config.js"
   },
   "devDependencies": {
     "prettier": "1.7.4"
