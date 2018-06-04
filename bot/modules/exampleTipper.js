@@ -16,8 +16,8 @@ const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin'
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-let config = config.get('litecoind');
-const litecoin = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
+let walletConfig = config.get('litecoind');
+const litecoin = new bitcoin.Client(walletConfig); //leave as = new bitcoin.Client(walletConfig)
 
 exports.commands = ['tipltc'];
 exports.tipltc = {

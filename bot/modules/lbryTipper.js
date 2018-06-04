@@ -1,12 +1,12 @@
 'use strict';
 
-const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+const bitcoin = require('bitcoin');
 
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-let config = config.get('lbryd');
-const lbry = new bitcoin.Client(config); //leave as = new bitcoin.Client(config)
+let walletConfig = config.get('lbryd');
+const lbry = new bitcoin.Client(walletConfig);
 
 exports.commands = ['tiplbc'];
 exports.tiplbc = {
