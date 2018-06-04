@@ -30,12 +30,12 @@
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
   },
-  "phoenixd": {
+  "pxcd": {
     "port": 3339,
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
   },
-  "featherd": {
+  "ftcd": {
     "port": 3340,
     "user": "username",
     "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
