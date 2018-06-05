@@ -33,7 +33,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
 
 ## Edit Files
 
-1) Edit and rename `ecosystem.json.js.example` to `ecosystem.json.js` in the root folder to match the correct directories for log files and bot root folder.
+1) Edit and rename `ecosystem.config.js.example` to `ecosystem.config.js` in the root folder to match the correct directories for log files and bot root folder.
 
 2) Edit and rename `default.json.example` to `default.json` in `/config`. You will use the same info in the next step.
 
