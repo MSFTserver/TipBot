@@ -221,7 +221,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
                   userProfile.user.send({ embed: {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount.toString() + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
+                  description: ':heart_eyes::money_mouth: You got privately **Tipped  __' + amount.toString() + '__** :heart_eyes::money_mouth:',
                   color: 1363892,
                   fields: [
                     {
@@ -233,7 +233,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                 } });
                 message.author.send({ embed: {
                 title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + message.author.username + '> **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
+                description: ':heart_eyes::money_mouth: You privately **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:heart_eyes::money_mouth:',
                 color: 1363892,
                 fields: [
                   {
@@ -256,7 +256,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                 } else {
                   message.channel.send({ embed: {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + message.author.username + '> **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
+                  description: ':heart_eyes::money_mouth:<@' + message.author.id + '> **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:money_mouth::heart_eyes:',
                   color: 1363892,
                   fields: [
                     {
