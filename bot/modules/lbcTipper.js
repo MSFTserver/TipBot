@@ -235,7 +235,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
                     },
                     {
                       name: '__Receiver__',
-                      value: '<@ ' + recipient + '>',
+                      value: '<@' + recipient + '>',
                       inline: true
                     },
                     {
@@ -266,7 +266,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
                   },
                   {
                     name: '__Receiver__',
-                    value: '<@ ' + recipient + '>',
+                    value: '<@' + recipient + '>',
                     inline: true
                   },
                   {
@@ -304,7 +304,7 @@ function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
                     },
                     {
                       name: '__Receiver__',
-                      value: '<@ ' + recipient + '>',
+                      value: '<@' + recipient + '>',
                       inline: true
                     },
                     {
