@@ -68,12 +68,12 @@ function doBalance(message, tipper) {
     fields: [
       {
         name: '__User__',
-        value: '**' + message.author.username + '**',
+        value: '<@' + message.author.id + '>',
         inline: true
       },
       {
         name: '__Balance__',
-        value: balance.toString(),
+        value: '**' + balance.toString() + '**',
         inline: true
       }
     ]
@@ -93,12 +93,12 @@ function doDeposit(message, tipper) {
     fields: [
       {
         name: '__User__',
-        value: '**' + message.author.username + '**',
+        value: '<@' + message.author.id + '>',
         inline: true
       },
       {
         name: '__Address__',
-        value: '**' + address + '**\n' + addyLink(address),
+        value: '**' + address + '**',
         inline: true
       }
     ]
@@ -246,12 +246,12 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
                     {
                       name: '__Amount__',
                       value: '**' + amount.toString() + '**',
-                      inline: false
+                      inline: true
                     },
                     {
                       name: '__Fee__',
                       value: '**' + paytxfee.toString() + '**',
-                      inline: false
+                      inline: true
                     }
                   ]
                 } });
@@ -277,12 +277,12 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
                   {
                     name: '__Amount__',
                     value: '**' + amount.toString() + '**',
-                    inline: false
+                    inline: true
                   },
                   {
                     name: '__Fee__',
                     value: '**' + paytxfee.toString() + '**',
-                    inline: false
+                    inline: true
                   }
 
                 ]
@@ -315,12 +315,12 @@ function sendUFO(bot, message, tipper, recipient, amount, privacyFlag) {
                     {
                       name: '__Amount__',
                       value: '**' + amount.toString() + '**',
-                      inline: false
+                      inline: true
                     },
                     {
                       name: '__Fee__',
                       value: '**' + paytxfee.toString() + '**',
-                      inline: false
+                      inline: true
                     }
                   ]
                 } });
