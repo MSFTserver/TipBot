@@ -3,27 +3,29 @@ Simply find and replace instances below with the coin and symbol you want to use
 search and replace with case sensitivity!!
 example:
 1. litecoin   = ethereum
-2. Litecoin   = Ethereum
-3. ltc        = eth
-4. LTC        = ETH
+2. ltc        = eth
+3. LTC        = ETH
+4. http://Explorer-Url/tx/
+5. http://Explorer-Url/address/
 */
 
 /*
 'use strict';
 
-const bitcoin = require('bitcoin'); //leave as const bitcoin = require('bitcoin');
+const bitcoin = require('bitcoin');
 
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-let walletConfig = config.get('litecoind');
-const litecoin = new bitcoin.Client(walletConfig); //leave as = new bitcoin.Client(walletConfig)
+let walletConfig = config.get('ltc').config;
+let paytxfee = config.get('ltc').paytxfee;
+const ltc = new bitcoin.Client(walletConfig);
 
 exports.commands = ['tipltc'];
 exports.tipltc = {
   usage: '<subcommand>',
   description:
-    '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.',
+    '__**Litecoin (LTC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    has a default txfee of ' + paytxfee,
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
       words = msg.content
@@ -34,7 +36,7 @@ exports.tipltc = {
         }),
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
-        '**!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n    **<> : Replace with appropriate value.**',
+        '__**Litecoin (LTC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipltc** : Displays This Message\n    **!tipltc balance** : get your balance\n    **!tipltc deposit** : get address for your deposits\n    **!tipltc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipltc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipltc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**',
       channelwarning = 'Please use <#bot-spam> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help':
@@ -68,11 +70,28 @@ function doHelp(message, helpmsg) {
 }
 
 function doBalance(message, tipper) {
-  litecoin.getBalance(tipper, 1, function(err, balance) {
+  ltc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Litecoin balance.').then(message => message.delete(10000));
+      message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have *' + balance + '* LTC');
+      message.reply('You have **' + balance + '** Litecoin (LTC)');
+      const embedAddress = {
+      title: '**:bank::money_with_wings::moneybag:Litecoin (LTC) Balance!:moneybag::money_with_wings::bank:**',
+      color: 1363892,
+      fields: [
+        {
+          name: '__User__',
+          value: '**' + message.author.username + '**',
+          inline: true
+        },
+        {
+          name: '__Balance__',
+          value: balance,
+          inline: true
+        }
+      ]
+    };
+    message.channel.send({ embedAddress });
     }
   });
 }
@@ -80,9 +99,25 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your Litecoin deposit address.').then(message => message.delete(10000));
+      message.reply('Error getting your Litecoin (LTC) deposit address.').then(message => message.delete(10000));
     } else {
-      message.reply('Your Litecoin (LTC) address is ' + address);
+      const embedBalance = {
+      title: '**:bank::card_index::moneybag:Litecoin (LTC) Address!:moneybag::card_index::bank:**',
+      color: 1363892,
+      fields: [
+        {
+          name: '__User__',
+          value: '**' + message.author.username + '**',
+          inline: true
+        },
+        {
+          name: '__Address__',
+          value: '[' + address + '](http://Explorer-Url/address/' + address + ')',
+          inline: true
+        }
+      ]
+    };
+    message.channel.send({ embedBalance });
     }
   });
 }
@@ -97,15 +132,51 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that many Litecoin coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that much Litecoin (LTC)...").then(message => message.delete(10000));
     return;
   }
 
-  litecoin.sendFrom(tipper, address, Number(amount), function(err, txId) {
+  ltc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply(err.message).then(message => message.delete(10000));
+      message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You withdrew ' + amount + ' LTC to ' + address + '\n' + txLink(txId) + '\n');
+      if (Number(amount) + Number(paytxfee) > Number(balance)) {
+        msg.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
+        return;
+      }
+      ltc.sendFrom(tipper, address, Number(amount), function(err, txId) {
+        if (err) {
+          message.reply(err.message).then(message => message.delete(10000));
+        } else {
+          const embedWithdraw = {
+          title: '**:outbox_tray::money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+          color: 1363892,
+          fields: [
+            {
+              name: '__Withdrew__',
+              value: '**' + amount + ' LTC**',
+              inline: true
+            },
+            {
+              name: '__Address__',
+              value: '[' + address + '](http://Explorer-Url/address/' + address + ')',
+              inline: true
+            },
+            {
+              name: '__Fee__',
+              value: '**' + paytxfee + '**',
+              inline: true
+            },
+            {
+              name: '__txid__',
+              value: '(' + txid + ')[' + txLink(txid) + ']',
+              inline: true
+            }
+          ]
+        };
+        message.channel.send({ embedWithdraw });
+      }
+    });
     }
   });
 }
@@ -125,20 +196,32 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that many Litecoin coins...").then(message => message.delete(10000));
+    message.reply("I don't know how to tip that much Litecoin (LTC)...").then(message => message.delete(10000));
     return;
   }
-  if (!message.mentions.users.first()){
-       message
-        .reply('Sorry, I could not find a user in your tip...')
-        .then(message => message.delete(10000));
+
+  ltc.getBalance(tipper, 1, function(err, balance) {
+    if (err) {
+      message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
+    } else {
+      if (Number(amount) + Number(paytxfee) > Number(balance)) {
+        msg.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
         return;
       }
-  if (message.mentions.users.first().id) {
-    sendLTC(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
-  } else {
-    message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
-  }
+
+      if (!message.mentions.users.first()){
+           message
+            .reply('Sorry, I could not find a user in your tip...')
+            .then(message => message.delete(10000));
+            return;
+          }
+      if (message.mentions.users.first().id) {
+        sendLTC(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
+      } else {
+        message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
+      }
+    }
+  });
 }
 
 function sendLTC(bot, message, tipper, recipient, amount, privacyFlag) {
@@ -146,62 +229,82 @@ function sendLTC(bot, message, tipper, recipient, amount, privacyFlag) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-      litecoin.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
-        if (err) {
-          message.reply(err.message).then(message => message.delete(10000));
-        } else {
-          if (privacyFlag) {
-            let userProfile = message.guild.members.find('id', recipient);
-            var iimessage =
-              ' You got privately tipped ' +
-              amount +
-              ' LTC\n' +
-              txLink(txId) +
-              '\n' +
-              'DM me `!tipltc` for ltcTipper instructions.';
-            userProfile.user.send(iimessage);
-            var imessage =
-              ' You privately tipped ' +
-              userProfile.user.username +
-              ' ' +
-              amount +
-              ' LTC\n' +
-              txLink(txId) +
-              '\n' +
-              'DM me `!tipltc` for ltcTipper instructions.';
-            message.author.send(imessage);
-
-            if (
-              message.content.startsWith('!tipltc private ')
-            ) {
-              message.delete(1000); //Supposed to delete message
-            }
-          } else {
-            var iiimessage =
-              ' tipped <@' +
-              recipient +
-              '> ' +
-              amount +
-              ' LTC\n' +
-              txLink(txId) +
-              '\n' +
-              'DM me `!tipltc` for ltcTipper instructions.';
-              message.reply(iiimessage);
-          }
-        }
-      });
+          ltc.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
+              if (err) {
+                message.reply(err.message).then(message => message.delete(10000));
+              } else {
+                if (privacyFlag) {
+                  let userProfile = message.guild.members.find('id', recipient);
+                    const embedTipReciever = {
+                    title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
+                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
+                    color: 1363892,
+                    fields: [
+                      {
+                        name: '__txid__',
+                        value: '(' + txid + ')[' + txLink(txid) + ']',
+                        inline: true
+                      }
+                    ]
+                  };
+                  userProfile.user.send({ embedTipReciever });
+                  const embedTipSender = {
+                  title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
+                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LTC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
+                  color: 1363892,
+                  fields: [
+                    {
+                      name: '__Fee__',
+                      value: '**' + paytxfee + '**',
+                      inline: true
+                    },
+                    {
+                      name: '__txid__',
+                      value: '(' + txid + ')[' + txLink(txid) + ']',
+                      inline: true
+                    }
+                  ]
+                };
+                message.author.send({ embedTipSender });
+                  if (
+                    message.content.startsWith('!tipltc private ')
+                  ) {
+                    message.delete(1000); //Supposed to delete message
+                  }
+                } else {
+                    const embedTip = {
+                    title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
+                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LTC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
+                    color: 1363892,
+                    fields: [
+                      {
+                        name: '__Fee__',
+                        value: '**' + paytxfee + '**',
+                        inline: true
+                      },
+                      {
+                        name: '__txid__',
+                        value: '(' + txid + ')[' + txLink(txid) + ']',
+                        inline: true
+                      }
+                    ]
+                  };
+                  message.channel.send({ embedTip });
+                }
+              }
+            });
     }
   });
 }
 
 function getAddress(userId, cb) {
-  litecoin.getAddressesByAccount(userId, function(err, addresses) {
+  ltc.getAddressesByAccount(userId, function(err, addresses) {
     if (err) {
       cb(err);
     } else if (addresses.length > 0) {
       cb(null, addresses[0]);
     } else {
-      litecoin.getNewAddress(userId, function(err, address) {
+      ltc.getNewAddress(userId, function(err, address) {
         if (err) {
           cb(err);
         } else {
@@ -236,5 +339,4 @@ function getValidatedAmount(amount) {
 function txLink(txId) {
   return 'http://Explorer-Url/tx/' + txId;
 }
-
 */

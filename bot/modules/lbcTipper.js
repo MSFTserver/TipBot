@@ -5,15 +5,15 @@ const bitcoin = require('bitcoin');
 let Regex = require('regex'),
   config = require('config'),
   spamchannels = config.get('moderation').botspamchannels;
-let walletConfig = config.get('doge').config;
-let paytxfee = config.get('doge').paytxfee;
-const doge = new bitcoin.Client(walletConfig);
+let walletConfig = config.get('lbc').config;
+let paytxfee = config.get('lbc').paytxfee;
+const lbc = new bitcoin.Client(walletConfig);
 
-exports.commands = ['tipdoge'];
-exports.tipdoge = {
+exports.commands = ['tiplbc'];
+exports.tiplbc = {
   usage: '<subcommand>',
   description:
-    '__**Dogecoin (DOGE) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    has a default txfee of ' + paytxfee,
+    '__**LBRY Credit (LBC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    has a default txfee of ' + paytxfee,
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
       words = msg.content
@@ -24,7 +24,7 @@ exports.tipdoge = {
         }),
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
-        '__**Dogecoin (DOGE) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipdoge** : Displays This Message\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**',
+        '__**LBRY Credit (LBC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tiplbc** : Displays This Message\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**',
       channelwarning = 'Please use <#bot-spam> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help':
@@ -58,13 +58,13 @@ function doHelp(message, helpmsg) {
 }
 
 function doBalance(message, tipper) {
-  doge.getBalance(tipper, 1, function(err, balance) {
+  lbc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
+      message.reply('Error getting LBRY Credit (LBC) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have **' + balance + '** Dogecoin (DOGE)');
+      message.reply('You have **' + balance + '** LBRY Credit (LBC)');
       const embedAddress = {
-      title: '**:bank::money_with_wings::moneybag:Dogecoin (DOGE) Balance!:moneybag::money_with_wings::bank:**',
+      title: '**:bank::money_with_wings::moneybag:LBRY Credit (LBC) Balance!:moneybag::money_with_wings::bank:**',
       color: 1363892,
       fields: [
         {
@@ -87,10 +87,10 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your Dogecoin (DOGE) deposit address.').then(message => message.delete(10000));
+      message.reply('Error getting your LBRY Credit (LBC) deposit address.').then(message => message.delete(10000));
     } else {
       const embedBalance = {
-      title: '**:bank::card_index::moneybag:Dogecoin (DOGE) Address!:moneybag::card_index::bank:**',
+      title: '**:bank::card_index::moneybag:LBRY Credit (LBC) Address!:moneybag::card_index::bank:**',
       color: 1363892,
       fields: [
         {
@@ -100,7 +100,7 @@ function doDeposit(message, tipper) {
         },
         {
           name: '__Address__',
-          value: '[' + address + '](https://dogechain.info/address/' + address + ')',
+          value: '[' + address + '](https://explorer.lbry.io/address/' + address + ')',
           inline: true
         }
       ]
@@ -120,34 +120,34 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that much Dogecoin (DOGE)...").then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that much LBRY Credit (LBC)...").then(message => message.delete(10000));
     return;
   }
 
-  doge.getBalance(tipper, 1, function(err, balance) {
+  lbc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
+      message.reply('Error getting LBRY Credit (LBC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
+        msg.channel.send('Please leave atleast ' + paytxfee + ' LBRY Credit (LBC) for transaction fees!');
         return;
       }
-      doge.sendFrom(tipper, address, Number(amount), function(err, txId) {
+      lbc.sendFrom(tipper, address, Number(amount), function(err, txId) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
           const embedWithdraw = {
-          title: '**:outbox_tray::money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+          title: '**:outbox_tray::money_with_wings::moneybag:LBRY Credit (LBC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
           color: 1363892,
           fields: [
             {
               name: '__Withdrew__',
-              value: '**' + amount + ' DOGE**',
+              value: '**' + amount + ' LBC**',
               inline: true
             },
             {
               name: '__Address__',
-              value: '[' + address + '](https://dogechain.info/tx/address' + address + ')',
+              value: '[' + address + '](https://explorer.lbry.io/address/' + address + ')',
               inline: true
             },
             {
@@ -184,16 +184,16 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that much Dogecoin (DOGE)...").then(message => message.delete(10000));
+    message.reply("I don't know how to tip that much LBRY Credit (LBC)...").then(message => message.delete(10000));
     return;
   }
 
-  doge.getBalance(tipper, 1, function(err, balance) {
+  lbc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
+      message.reply('Error getting LBRY Credit (LBC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
+        msg.channel.send('Please leave atleast ' + paytxfee + ' LBRY Credit (LBC) for transaction fees!');
         return;
       }
 
@@ -204,7 +204,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
             return;
           }
       if (message.mentions.users.first().id) {
-        sendDOGE(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
+        sendLBC(bot, message, tipper, message.mentions.users.first().id.replace('!', ''), amount, prv);
       } else {
         message.reply('Sorry, I could not find a user in your tip...').then(message => message.delete(10000));
       }
@@ -212,19 +212,19 @@ function doTip(bot, message, tipper, words, helpmsg) {
   });
 }
 
-function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
+function sendLBC(bot, message, tipper, recipient, amount, privacyFlag) {
   getAddress(recipient.toString(), function(err, address) {
     if (err) {
       message.reply(err.message).then(message => message.delete(10000));
     } else {
-          doge.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
+          lbc.sendFrom(tipper, address, Number(amount), 1, null, null, function(err, txId) {
               if (err) {
                 message.reply(err.message).then(message => message.delete(10000));
               } else {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
                     const embedTipReciever = {
-                    title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
+                    title: '**:money_with_wings::moneybag:LBRY Credit (LBC) Transaction Completed!:moneybag::money_with_wings:**',
                     description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
                     color: 1363892,
                     fields: [
@@ -237,8 +237,8 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                   };
                   userProfile.user.send({ embedTipReciever });
                   const embedTipSender = {
-                  title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
+                  title: '**:money_with_wings::moneybag:LBRY Credit (LBC) Transaction Completed!:moneybag::money_with_wings:**',
+                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LBC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
                   color: 1363892,
                   fields: [
                     {
@@ -255,14 +255,14 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                 };
                 message.author.send({ embedTipSender });
                   if (
-                    message.content.startsWith('!tipdoge private ')
+                    message.content.startsWith('!tiplbc private ')
                   ) {
                     message.delete(1000); //Supposed to delete message
                   }
                 } else {
                     const embedTip = {
-                    title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
+                    title: '**:money_with_wings::moneybag:LBRY Credit (LBC) Transaction Completed!:moneybag::money_with_wings:**',
+                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LBC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
                     color: 1363892,
                     fields: [
                       {
@@ -286,13 +286,13 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
 }
 
 function getAddress(userId, cb) {
-  doge.getAddressesByAccount(userId, function(err, addresses) {
+  lbc.getAddressesByAccount(userId, function(err, addresses) {
     if (err) {
       cb(err);
     } else if (addresses.length > 0) {
       cb(null, addresses[0]);
     } else {
-      doge.getNewAddress(userId, function(err, address) {
+      lbc.getNewAddress(userId, function(err, address) {
         if (err) {
           cb(err);
         } else {
@@ -318,12 +318,12 @@ function isSpam(msg) {
 
 function getValidatedAmount(amount) {
   amount = amount.trim();
-  if (amount.toLowerCase().endsWith('doge')) {
+  if (amount.toLowerCase().endsWith('lbc')) {
     amount = amount.substring(0, amount.length - 3);
   }
   return amount.match(/^[0-9]+(\.[0-9]+)?$/) ? amount : null;
 }
 
 function txLink(txId) {
-  return 'https://dogechain.info/tx/' + txId;
+  return 'https://explorer.lbry.io/tx/' + txId;
 }

@@ -1,7 +1,7 @@
 # Bot for Discord communities to facilitate crypto coin tipping!
 (This README will be updated along with bot updates)
-Features:
 
+Features:
 - Tipbot for any coin running the bitcoind client.
     - Help message `!tip`.
 - Dynamic plugin loading with permission support.
@@ -38,10 +38,13 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
 2) Edit and rename `default.json.example` to `default.json` in `/config`. You will use the same info in the next step.
 
     ```
-    "ravend": {
+    "raven": {
+      "paytxfee": .01
+      "config":
         "port": 3335,
         "user": "username",
         "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+      }
     },
     ```
 
@@ -66,6 +69,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
         rpcclienttimeout=30
         rpcthreads=<Number-of-Threads>
         rpcworkqueue=1000
+        paytxfee=<Amount-to-always-pay-tx-fee>
         ```
 
         1) NOTE: if you are using a master node coin you also need to add these extra options into your wallets config file

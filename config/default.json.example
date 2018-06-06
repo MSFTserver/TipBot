@@ -5,40 +5,61 @@
       "prefix": "!",
       "debug": true
   },
-  "ravend": {
+  "rvn": {
+    "paytxfee": .01,
+    "config": {
       "port": 3335,
       "user": "username",
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
-    "doged": {
+  "doge": {
+    "paytxfee": 1,
+    "config": {
       "port": 3336,
       "user": "username",
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+}
   },
-  "lbryd": {
-    "port": 3337,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  "lbc": {
+    "paytxfee": .01,
+    "config": {
+      "port": 3337,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
-  "protond": {
-    "port": 3338,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  "proton" {
+    "paytxfee": .01,
+    "config": {
+      "port": 3338,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
-  "ufod": {
-    "port": 3338,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  "ufo" {
+    "paytxfee": .01,
+    "config": {
+      "port": 3338,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
-  "pxcd": {
-    "port": 3339,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  "pxc": {
+    "paytxfee": .01,
+    "config": {
+      "port": 3339,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
-  "ftcd": {
-    "port": 3340,
-    "user": "username",
-    "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+  "ftc": {
+    "paytxfee": .01,
+    "config": {
+      "port": 3340,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
   },
   "moderation":{
   "pm2Name": "TipBot",
