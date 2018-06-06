@@ -81,12 +81,12 @@ function doBalance(message, tipper) {
       {
         name: '__User__',
         value: '<@' + message.author.id + '>',
-        inline: true
+        inline: false
       },
       {
         name: '__Balance__',
         value: '**' + balance.toString() + '**',
-        inline: true
+        inline: false
       }
     ]
   } });
@@ -106,12 +106,12 @@ function doDeposit(message, tipper) {
       {
         name: '__User__',
         value: '<@' + message.author.id + '>',
-        inline: true
+        inline: false
       },
       {
         name: '__Address__',
         value: '**' + address + '**',
-        inline: true
+        inline: false
       }
     ]
   } });
