@@ -62,23 +62,22 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
     } else {
-      var messageText = {
-      title: '**:bank::money_with_wings::moneybag:Dogecoin (DOGE) Balance!:moneybag::money_with_wings::bank:**',
-      color: 1363892,
-      fields: [
-        {
-          name: '__User__',
-          value: '**' + message.author.username + '**',
-          inline: true
-        },
-        {
-          name: '__Balance__',
-          value: balance,
-          inline: true
-        }
-      ]
-    };
-    message.channel.send(createEmbed(messageText));
+    message.channel.send({ embed: {
+    title: '**:bank::money_with_wings::moneybag:Dogecoin (DOGE) Balance!:moneybag::money_with_wings::bank:**',
+    color: 1363892,
+    fields: [
+      {
+        name: '__User__',
+        value: '**' + message.author.username + '**',
+        inline: true
+      },
+      {
+        name: '__Balance__',
+        value: balance,
+        inline: true
+      }
+    ]
+  } });
     }
   });
 }
@@ -88,23 +87,22 @@ function doDeposit(message, tipper) {
     if (err) {
       message.reply('Error getting your Dogecoin (DOGE) deposit address.').then(message => message.delete(10000));
     } else {
-      var messageText = {
-      title: '**:bank::card_index::moneybag:Dogecoin (DOGE) Address!:moneybag::card_index::bank:**',
-      color: 1363892,
-      fields: [
-        {
-          name: '__User__',
-          value: '**' + message.author.username + '**',
-          inline: true
-        },
-        {
-          name: '__Address__',
-          value: '[' + address + '](https://dogechain.info/address/' + address + ')',
-          inline: true
-        }
-      ]
-    };
-    message.channel.send({ createEmbed(messageText) });
+    message.channel.send({ embed: {
+    title: '**:bank::card_index::moneybag:Dogecoin (DOGE) Address!:moneybag::card_index::bank:**',
+    color: 1363892,
+    fields: [
+      {
+        name: '__User__',
+        value: '**' + message.author.username + '**',
+        inline: true
+      },
+      {
+        name: '__Address__',
+        value: '[' + address + '](https://dogechain.info/address/' + address + ')',
+        inline: true
+      }
+    ]
+  } });
     }
   });
 }
@@ -135,33 +133,32 @@ function doWithdraw(message, tipper, words, helpmsg) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
-          var messageText = {
-          title: '**:outbox_tray::money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
-          color: 1363892,
-          fields: [
-            {
-              name: '__Withdrew__',
-              value: '**' + amount + ' DOGE**',
-              inline: true
-            },
-            {
-              name: '__Address__',
-              value: '[' + address + '](https://dogechain.info/tx/address' + address + ')',
-              inline: true
-            },
-            {
-              name: '__Fee__',
-              value: '**' + paytxfee + '**',
-              inline: true
-            },
-            {
-              name: '__txid__',
-              value: '(' + txid + ')[' + txLink(txid) + ']',
-              inline: true
-            }
-          ]
-        };
-        message.channel.send({ createEmbed(messageText) });
+        message.channel.send({embed:{
+        title: '**:outbox_tray::money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+        color: 1363892,
+        fields: [
+          {
+            name: '__Withdrew__',
+            value: '**' + amount + ' DOGE**',
+            inline: true
+          },
+          {
+            name: '__Address__',
+            value: '[' + address + '](https://dogechain.info/tx/address' + address + ')',
+            inline: true
+          },
+          {
+            name: '__Fee__',
+            value: '**' + paytxfee + '**',
+            inline: true
+          },
+          {
+            name: '__txid__',
+            value: '(' + txid + ')[' + txLink(txid) + ']',
+            inline: true
+          }
+        ]
+      }});
       }
     });
     }
@@ -222,20 +219,42 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
               } else {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
-                    var messageText = {
-                    title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
-                    color: 1363892,
-                    fields: [
-                      {
-                        name: '__txid__',
-                        value: '(' + txid + ')[' + txLink(txid) + ']',
-                        inline: true
-                      }
-                    ]
-                  };
-                  userProfile.user.send({ createEmbed(messageText) });
-                  var messageText = {
+                  userProfile.user.send({ embed: {
+                  title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
+                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
+                  color: 1363892,
+                  fields: [
+                    {
+                      name: '__txid__',
+                      value: '(' + txid + ')[' + txLink(txid) + ']',
+                      inline: true
+                    }
+                  ]
+                } });
+                message.author.send({ embed: {
+                title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
+                description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
+                color: 1363892,
+                fields: [
+                  {
+                    name: '__Fee__',
+                    value: '**' + paytxfee + '**',
+                    inline: true
+                  },
+                  {
+                    name: '__txid__',
+                    value: '(' + txid + ')[' + txLink(txid) + ']',
+                    inline: true
+                  }
+                ]
+              } });
+                  if (
+                    message.content.startsWith('!tipdoge private ')
+                  ) {
+                    message.delete(1000); //Supposed to delete message
+                  }
+                } else {
+                  message.channel.send({ embed: {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
                   description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                   color: 1363892,
@@ -251,32 +270,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                       inline: true
                     }
                   ]
-                };
-                message.author.send({ createEmbed(messageText) });
-                  if (
-                    message.content.startsWith('!tipdoge private ')
-                  ) {
-                    message.delete(1000); //Supposed to delete message
-                  }
-                } else {
-                    var messageText = {
-                    title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
-                    color: 1363892,
-                    fields: [
-                      {
-                        name: '__Fee__',
-                        value: '**' + paytxfee + '**',
-                        inline: true
-                      },
-                      {
-                        name: '__txid__',
-                        value: '(' + txid + ')[' + txLink(txid) + ']',
-                        inline: true
-                      }
-                    ]
-                  };
-                  message.channel.send({ createEmbed(messageText) });
+                } });
                 }
               }
             });
@@ -325,9 +319,4 @@ function getValidatedAmount(amount) {
 
 function txLink(txId) {
   return 'https://dogechain.info/tx/' + txId;
-}
-
-function createEmbed(message){
-  const embed = message
-  return embed
 }
