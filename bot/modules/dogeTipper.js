@@ -73,7 +73,7 @@ function doBalance(message, tipper) {
       },
       {
         name: '__Balance__',
-        value: balance,
+        value: Number(balance),
         inline: true
       }
     ]
