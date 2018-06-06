@@ -78,7 +78,7 @@ function doBalance(message, tipper) {
         }
       ]
     };
-    message.channel.send({ createEmbed(messageText) });
+    message.channel.send(createEmbed(messageText));
     }
   });
 }
