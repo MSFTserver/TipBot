@@ -62,8 +62,8 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Proton (PROTON) balance.').then(message => message.delete(10000));
     } else {
-      const embedAddress = embed: {
-      description: '**:bank::money_with_wings::moneybag:Proton (PROTON) Balance!:moneybag::money_with_wings::bank:**',
+      const embedAddress = {
+      title: '**:bank::money_with_wings::moneybag:Proton (PROTON) Balance!:moneybag::money_with_wings::bank:**',
       color: 1363892,
       fields: [
         {
@@ -78,7 +78,7 @@ function doBalance(message, tipper) {
         }
       ]
     };
-    message.channel.send(embedAddress);
+    message.channel.send({ embedAddress });
     }
   });
 }
@@ -88,8 +88,8 @@ function doDeposit(message, tipper) {
     if (err) {
       message.reply('Error getting your Proton (PROTON) deposit address.').then(message => message.delete(10000));
     } else {
-      const embedBalance = embed: {
-      description: '**:bank::card_index::moneybag:Proton (PROTON) Address!:moneybag::card_index::bank:**',
+      const embedBalance = {
+      title: '**:bank::card_index::moneybag:Proton (PROTON) Address!:moneybag::card_index::bank:**',
       color: 1363892,
       fields: [
         {
@@ -104,7 +104,7 @@ function doDeposit(message, tipper) {
         }
       ]
     };
-    message.channel.send(embedBalance);
+    message.channel.send({ embedBalance });
     }
   });
 }
@@ -135,8 +135,8 @@ function doWithdraw(message, tipper, words, helpmsg) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
-          const embedWithdraw = embed: {
-          description: '**:outbox_tray::money_with_wings::moneybag:Proton (PROTON) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+          const embedWithdraw = {
+          title: '**:outbox_tray::money_with_wings::moneybag:Proton (PROTON) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
           color: 1363892,
           fields: [
             {
@@ -161,7 +161,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
             }
           ]
         };
-        message.channel.send(embedWithdraw);
+        message.channel.send({ embedWithdraw });
       }
     });
     }
@@ -222,7 +222,7 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
               } else {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
-                    const embedTipReciever = embed: {
+                    const embedTipReciever = {
                     title: '**:money_with_wings::moneybag:Proton (PROTON) Transaction Completed!:moneybag::money_with_wings:**',
                     description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                     color: 1363892,
@@ -234,8 +234,8 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
                       }
                     ]
                   };
-                  userProfile.user.send(embedTipReciever);
-                  const embedTipSender = embed: {
+                  userProfile.user.send({ embedTipReciever });
+                  const embedTipSender = {
                   title: '**:money_with_wings::moneybag:Proton (PROTON) Transaction Completed!:moneybag::money_with_wings:**',
                   description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' PROTON** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                   color: 1363892,
@@ -252,14 +252,14 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
                     }
                   ]
                 };
-                message.author.send(embedTipSender);
+                message.author.send({ embedTipSender });
                   if (
                     message.content.startsWith('!tipproton private ')
                   ) {
                     message.delete(1000); //Supposed to delete message
                   }
                 } else {
-                    const embedTip = embed: {
+                    const embedTip = {
                     title: '**:money_with_wings::moneybag:Proton (PROTON) Transaction Completed!:moneybag::money_with_wings:**',
                     description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' PROTON** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                     color: 1363892,
@@ -276,7 +276,7 @@ function sendPROTON(bot, message, tipper, recipient, amount, privacyFlag) {
                       }
                     ]
                   };
-                  message.channel.send(embedTip);
+                  message.channel.send({ embedTip });
                 }
               }
             });
