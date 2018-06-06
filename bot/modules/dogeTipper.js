@@ -154,7 +154,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
           },
           {
             name: '__txid__',
-            value: '(' + txid + ')[' + txLink(txid) + ']',
+            value: '(' + txId + ')[' + txLink(txId) + ']',
             inline: true
           }
         ]
@@ -226,7 +226,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                   fields: [
                     {
                       name: '__txid__',
-                      value: '(' + txid + ')[' + txLink(txid) + ']',
+                      value: '(' + txId + ')[' + txLink(txId) + ']',
                       inline: true
                     }
                   ]
@@ -243,7 +243,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                   },
                   {
                     name: '__txid__',
-                    value: '(' + txid + ')[' + txLink(txid) + ']',
+                    value: '(' + txId + ')[' + txLink(txId) + ']',
                     inline: true
                   }
                 ]
@@ -266,7 +266,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                     },
                     {
                       name: '__txid__',
-                      value: '(' + txid + ')[' + txLink(txid) + ']',
+                      value: '(' + txId + ')[' + txLink(txId) + ']',
                       inline: true
                     }
                   ]
