@@ -72,7 +72,9 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
         paytxfee=<Amount-to-always-pay-tx-fee>
         ```
 
-        1) NOTE: if you are using a master node coin you also need to add these extra options into your wallets config file
+        1) NOTE: for `paytxfee` to actually work properly use the console or rpc command `settxfee number` number being the fee of course.
+
+        2) NOTE: if you are using a master node coin you also need to add these extra options into your wallets config file
 
           ```
           staking=0

@@ -2,7 +2,7 @@
 Simply find and replace instances below with the coin and symbol you want to use!
 search and replace with case sensitivity!!
 example:
-1. litecoin   = ethereum
+1. Litecoin   = Ethereum
 2. ltc        = eth
 3. LTC        = ETH
 4. http://Explorer-Url/tx/
@@ -74,24 +74,22 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have **' + balance + '** Litecoin (LTC)');
-      const embedAddress = {
-      title: '**:bank::money_with_wings::moneybag:Litecoin (LTC) Balance!:moneybag::money_with_wings::bank:**',
-      color: 1363892,
-      fields: [
-        {
-          name: '__User__',
-          value: '**' + message.author.username + '**',
-          inline: true
-        },
-        {
-          name: '__Balance__',
-          value: balance,
-          inline: true
-        }
-      ]
-    };
-    message.channel.send({ embedAddress });
+    message.channel.send({ embed: {
+    title: '**:bank::money_with_wings::moneybag:Litecoin (LTC) Balance!:moneybag::money_with_wings::bank:**',
+    color: 1363892,
+    fields: [
+      {
+        name: '__User__',
+        value: '**' + message.author.username + '**',
+        inline: true
+      },
+      {
+        name: '__Balance__',
+        value: balance.toString(),
+        inline: true
+      }
+    ]
+  } });
     }
   });
 }
@@ -101,23 +99,22 @@ function doDeposit(message, tipper) {
     if (err) {
       message.reply('Error getting your Litecoin (LTC) deposit address.').then(message => message.delete(10000));
     } else {
-      const embedBalance = {
-      title: '**:bank::card_index::moneybag:Litecoin (LTC) Address!:moneybag::card_index::bank:**',
-      color: 1363892,
-      fields: [
-        {
-          name: '__User__',
-          value: '**' + message.author.username + '**',
-          inline: true
-        },
-        {
-          name: '__Address__',
-          value: '[' + address + '](http://Explorer-Url/address/' + address + ')',
-          inline: true
-        }
-      ]
-    };
-    message.channel.send({ embedBalance });
+    message.channel.send({ embed: {
+    title: '**:bank::card_index::moneybag:Litecoin (LTC) Address!:moneybag::card_index::bank:**',
+    color: 1363892,
+    fields: [
+      {
+        name: '__User__',
+        value: '**' + message.author.username + '**',
+        inline: true
+      },
+      {
+        name: '__Address__',
+        value: '**' + address + '**\n' + addyLink(address),
+        inline: true
+      }
+    ]
+  } });
     }
   });
 }
@@ -148,33 +145,37 @@ function doWithdraw(message, tipper, words, helpmsg) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
-          const embedWithdraw = {
-          title: '**:outbox_tray::money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
-          color: 1363892,
-          fields: [
-            {
-              name: '__Withdrew__',
-              value: '**' + amount + ' LTC**',
-              inline: true
-            },
-            {
-              name: '__Address__',
-              value: '[' + address + '](http://Explorer-Url/address/' + address + ')',
-              inline: true
-            },
-            {
-              name: '__Fee__',
-              value: '**' + paytxfee + '**',
-              inline: true
-            },
-            {
-              name: '__txid__',
-              value: '(' + txid + ')[' + txLink(txid) + ']',
-              inline: true
-            }
-          ]
-        };
-        message.channel.send({ embedWithdraw });
+        message.channel.send({embed:{
+        title: '**:outbox_tray::money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+        color: 1363892,
+        fields: [
+          {
+            name: '__Sender__',
+            value: '<@' + message.author.id + '>',
+            inline: true
+          },
+          {
+            name: '__Receiver__',
+            value: '**' + address + '**\n' + addyLink(address),
+            inline: true
+          },
+          {
+            name: '__txid__',
+            value: '**' + txId + '**\n' + txLink(txId),
+            inline: false
+          },
+          {
+            name: '__Amount__',
+            value: '**' + amount.toString() + '**',
+            inline: true
+          },
+          {
+            name: '__Fee__',
+            value: '**' + paytxfee.toString() + '**',
+            inline: true
+          }
+        ]
+      }});
       }
     });
     }
@@ -235,61 +236,106 @@ function sendLTC(bot, message, tipper, recipient, amount, privacyFlag) {
               } else {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
-                    const embedTipReciever = {
-                    title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
-                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
-                    color: 1363892,
-                    fields: [
-                      {
-                        name: '__txid__',
-                        value: '(' + txid + ')[' + txLink(txid) + ']',
-                        inline: true
-                      }
-                    ]
-                  };
-                  userProfile.user.send({ embedTipReciever });
-                  const embedTipSender = {
+                  userProfile.user.send({ embed: {
                   title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LTC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
                   color: 1363892,
                   fields: [
                     {
-                      name: '__Fee__',
-                      value: '**' + paytxfee + '**',
+                      name: '__Sender__',
+                      value: 'Private Tipper',
+                      inline: true
+                    },
+                    {
+                      name: '__Receiver__',
+                      value: '<@' + recipient + '>',
                       inline: true
                     },
                     {
                       name: '__txid__',
-                      value: '(' + txid + ')[' + txLink(txid) + ']',
-                      inline: true
+                      value: '**' + txId + '**\n' + txLink(txId),
+                      inline: false
+                    },
+                    {
+                      name: '__Amount__',
+                      value: '**' + amount.toString() + '**',
+                      inline: false
+                    },
+                    {
+                      name: '__Fee__',
+                      value: '**' + paytxfee.toString() + '**',
+                      inline: false
                     }
                   ]
-                };
-                message.author.send({ embedTipSender });
+                } });
+                message.author.send({ embed: {
+                title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
+                color: 1363892,
+                fields: [
+                  {
+                    name: '__Sender__',
+                    value: '<@' + message.author.id + '>',
+                    inline: true
+                  },
+                  {
+                    name: '__Receiver__',
+                    value: '<@' + recipient + '>',
+                    inline: true
+                  },
+                  {
+                    name: '__txid__',
+                    value: '**' + txId + '**\n' + txLink(txId),
+                    inline: false
+                  },
+                  {
+                    name: '__Amount__',
+                    value: '**' + amount.toString() + '**',
+                    inline: false
+                  },
+                  {
+                    name: '__Fee__',
+                    value: '**' + paytxfee.toString() + '**',
+                    inline: false
+                  }
+
+                ]
+              } });
                   if (
                     message.content.startsWith('!tipltc private ')
                   ) {
                     message.delete(1000); //Supposed to delete message
                   }
                 } else {
-                    const embedTip = {
-                    title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
-                    description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' LTC** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:'
-                    color: 1363892,
-                    fields: [
-                      {
-                        name: '__Fee__',
-                        value: '**' + paytxfee + '**',
-                        inline: true
-                      },
-                      {
-                        name: '__txid__',
-                        value: '(' + txid + ')[' + txLink(txid) + ']',
-                        inline: true
-                      }
-                    ]
-                  };
-                  message.channel.send({ embedTip });
+                  message.channel.send({ embed: {
+                  title: '**:money_with_wings::moneybag:Litecoin (LTC) Transaction Completed!:moneybag::money_with_wings:**',
+                  color: 1363892,
+                  fields: [
+                    {
+                      name: '__Sender__',
+                      value: '<@' + message.author.id + '>',
+                      inline: true
+                    },
+                    {
+                      name: '__Receiver__',
+                      value: '<@' + recipient + '>',
+                      inline: true
+                    },
+                    {
+                      name: '__txid__',
+                      value: '**' + txId + '**\n' + txLink(txId),
+                      inline: false
+                    },
+                    {
+                      name: '__Amount__',
+                      value: '**' + amount.toString() + '**',
+                      inline: false
+                    },
+                    {
+                      name: '__Fee__',
+                      value: '**' + paytxfee.toString() + '**',
+                      inline: false
+                    }
+                  ]
+                } });
                 }
               }
             });
@@ -338,5 +384,9 @@ function getValidatedAmount(amount) {
 
 function txLink(txId) {
   return 'http://Explorer-Url/tx/' + txId;
+}
+
+function addyLink(address) {
+  return 'http://Explorer-Url/address/' + address;
 }
 */
