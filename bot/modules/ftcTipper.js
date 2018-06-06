@@ -62,9 +62,8 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Feathercoin (FTC) balance.').then(message => message.delete(10000));
     } else {
-      message.reply('You have **' + balance + '** Feathercoin (FTC)');
       const embedAddress = {
-      title: '**:bank::money_with_wings::moneybag:Feathercoin (FTC) Balance!:moneybag::money_with_wings::bank:**',
+      description: '**:bank::money_with_wings::moneybag:Feathercoin (FTC) Balance!:moneybag::money_with_wings::bank:**',
       color: 1363892,
       fields: [
         {
@@ -90,7 +89,7 @@ function doDeposit(message, tipper) {
       message.reply('Error getting your Feathercoin (FTC) deposit address.').then(message => message.delete(10000));
     } else {
       const embedBalance = {
-      title: '**:bank::card_index::moneybag:Feathercoin (FTC) Address!:moneybag::card_index::bank:**',
+      description: '**:bank::card_index::moneybag:Feathercoin (FTC) Address!:moneybag::card_index::bank:**',
       color: 1363892,
       fields: [
         {
@@ -137,7 +136,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
           const embedWithdraw = {
-          title: '**:outbox_tray::money_with_wings::moneybag:Feathercoin (FTC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+          description: '**:outbox_tray::money_with_wings::moneybag:Feathercoin (FTC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
           color: 1363892,
           fields: [
             {
