@@ -73,7 +73,7 @@ function doBalance(message, tipper) {
       },
       {
         name: '__Balance__',
-        value: Number(balance),
+        value: balance.toString(),
         inline: true
       }
     ]
