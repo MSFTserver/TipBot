@@ -98,7 +98,7 @@ function doDeposit(message, tipper) {
       },
       {
         name: '__Address__',
-        value: '[' + address + '](https://dogechain.info/address/' + address + ')',
+        value: '**' + address + '**\n' + addyLink(address),
         inline: true
       }
     ]
@@ -138,23 +138,28 @@ function doWithdraw(message, tipper, words, helpmsg) {
         color: 1363892,
         fields: [
           {
-            name: '__Withdrew__',
-            value: '**' + amount.toString() + ' DOGE**',
+            name: '__Sender__',
+            value: '<@' + message.author.id + '>',
             inline: true
           },
           {
-            name: '__Address__',
-            value: '[' + address + '](https://dogechain.info/tx/address' + address + ')',
+            name: '__Receiver__',
+            value: '**' + address + '**\n' + addyLink(address),
+            inline: true
+          },
+          {
+            name: '__txid__',
+            value: '**' + txId + '**\n' + txLink(txId),
+            inline: false
+          },
+          {
+            name: '__Amount__',
+            value: '**' + amount.toString() + '**',
             inline: true
           },
           {
             name: '__Fee__',
             value: '**' + paytxfee.toString() + '**',
-            inline: true
-          },
-          {
-            name: '__txid__',
-            value: '(' + txId + ')[' + txLink(txId) + ']',
             inline: true
           }
         ]
@@ -221,31 +226,65 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
                   userProfile.user.send({ embed: {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':heart_eyes::money_mouth: You got privately **Tipped  __' + amount.toString() + '__** :heart_eyes::money_mouth:',
                   color: 1363892,
                   fields: [
                     {
-                      name: '__txid__',
-                      value: '(' + txId + ')[' + txLink(txId) + ']',
+                      name: '__Sender__',
+                      value: 'Private Tipper',
                       inline: true
+                    },
+                    {
+                      name: '__Receiver__',
+                      value: '<@ ' + recipient + '>',
+                      inline: true
+                    },
+                    {
+                      name: '__txid__',
+                      value: '**' + txId + '**\n' + txLink(txId),
+                      inline: false
+                    },
+                    {
+                      name: '__Amount__',
+                      value: '**' + amount.toString() + '**',
+                      inline: false
+                    },
+                    {
+                      name: '__Fee__',
+                      value: '**' + paytxfee.toString() + '**',
+                      inline: false
                     }
                   ]
                 } });
                 message.author.send({ embed: {
                 title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                description: ':heart_eyes::money_mouth: You privately **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:heart_eyes::money_mouth:',
                 color: 1363892,
                 fields: [
                   {
-                    name: '__Fee__',
-                    value: '**' + paytxfee.toString().toString() + '**',
+                    name: '__Sender__',
+                    value: '<@' + message.author.id + '>',
+                    inline: true
+                  },
+                  {
+                    name: '__Receiver__',
+                    value: '<@ ' + recipient + '>',
                     inline: true
                   },
                   {
                     name: '__txid__',
-                    value: '(' + txId + ')[' + txLink(txId) + ']',
-                    inline: true
+                    value: '**' + txId + '**\n' + txLink(txId),
+                    inline: false
+                  },
+                  {
+                    name: '__Amount__',
+                    value: '**' + amount.toString() + '**',
+                    inline: false
+                  },
+                  {
+                    name: '__Fee__',
+                    value: '**' + paytxfee.toString() + '**',
+                    inline: false
                   }
+
                 ]
               } });
                   if (
@@ -256,18 +295,32 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                 } else {
                   message.channel.send({ embed: {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
-                  description: ':heart_eyes::money_mouth:<@' + message.author.id + '> **Tipped  ' + amount.toString() + ' DOGE** to <@' + recipient + '>:money_mouth::heart_eyes:',
                   color: 1363892,
                   fields: [
                     {
-                      name: '__Fee__',
-                      value: '**' + paytxfee.toString() + '**',
+                      name: '__Sender__',
+                      value: '<@' + message.author.id + '>',
+                      inline: true
+                    },
+                    {
+                      name: '__Receiver__',
+                      value: '<@ ' + recipient + '>',
                       inline: true
                     },
                     {
                       name: '__txid__',
-                      value: '(' + txId + ')[' + txLink(txId) + ']',
-                      inline: true
+                      value: '**' + txId + '**\n' + txLink(txId),
+                      inline: false
+                    },
+                    {
+                      name: '__Amount__',
+                      value: '**' + amount.toString() + '**',
+                      inline: false
+                    },
+                    {
+                      name: '__Fee__',
+                      value: '**' + paytxfee.toString() + '**',
+                      inline: false
                     }
                   ]
                 } });
@@ -319,4 +372,8 @@ function getValidatedAmount(amount) {
 
 function txLink(txId) {
   return 'https://dogechain.info/tx/' + txId;
+}
+
+function addyLink(address) {
+  return 'https://dogechain.info/address/' + address;
 }
