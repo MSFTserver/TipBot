@@ -62,7 +62,7 @@ function doBalance(message, tipper) {
     if (err) {
       message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
     } else {
-      const embedAddress = {
+      var messageText = {
       title: '**:bank::money_with_wings::moneybag:Dogecoin (DOGE) Balance!:moneybag::money_with_wings::bank:**',
       color: 1363892,
       fields: [
@@ -78,7 +78,7 @@ function doBalance(message, tipper) {
         }
       ]
     };
-    message.channel.send({ embedAddress });
+    message.channel.send({ createEmbed(messageText) });
     }
   });
 }
@@ -88,7 +88,7 @@ function doDeposit(message, tipper) {
     if (err) {
       message.reply('Error getting your Dogecoin (DOGE) deposit address.').then(message => message.delete(10000));
     } else {
-      const embedBalance = {
+      var messageText = {
       title: '**:bank::card_index::moneybag:Dogecoin (DOGE) Address!:moneybag::card_index::bank:**',
       color: 1363892,
       fields: [
@@ -104,7 +104,7 @@ function doDeposit(message, tipper) {
         }
       ]
     };
-    message.channel.send({ embedBalance });
+    message.channel.send({ createEmbed(messageText) });
     }
   });
 }
@@ -135,7 +135,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
         if (err) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
-          const embedWithdraw = {
+          var messageText = {
           title: '**:outbox_tray::money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
           color: 1363892,
           fields: [
@@ -161,7 +161,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
             }
           ]
         };
-        message.channel.send({ embedWithdraw });
+        message.channel.send({ createEmbed(messageText) });
       }
     });
     }
@@ -222,7 +222,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
               } else {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
-                    const embedTipReciever = {
+                    var messageText = {
                     title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
                     description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth: You got privately **Tipped  __' + amount + '__** :money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                     color: 1363892,
@@ -234,8 +234,8 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                       }
                     ]
                   };
-                  userProfile.user.send({ embedTipReciever });
-                  const embedTipSender = {
+                  userProfile.user.send({ createEmbed(messageText) });
+                  var messageText = {
                   title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
                   description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                   color: 1363892,
@@ -252,14 +252,14 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                     }
                   ]
                 };
-                message.author.send({ embedTipSender });
+                message.author.send({ createEmbed(messageText) });
                   if (
                     message.content.startsWith('!tipdoge private ')
                   ) {
                     message.delete(1000); //Supposed to delete message
                   }
                 } else {
-                    const embedTip = {
+                    var messageText = {
                     title: '**:money_with_wings::moneybag:Dogecoin (DOGE) Transaction Completed!:moneybag::money_with_wings:**',
                     description: ':confetti_ball::heart_eyes::moneybag::money_with_wings::money_mouth:<@' + msg.author.username + '> **Tipped  ' + amount + ' DOGE** to <@' + recipient + '>:money_mouth: :money_with_wings::moneybag::heart_eyes::confetti_ball:',
                     color: 1363892,
@@ -276,7 +276,7 @@ function sendDOGE(bot, message, tipper, recipient, amount, privacyFlag) {
                       }
                     ]
                   };
-                  message.channel.send({ embedTip });
+                  message.channel.send({ createEmbed(messageText) });
                 }
               }
             });
@@ -325,4 +325,9 @@ function getValidatedAmount(amount) {
 
 function txLink(txId) {
   return 'https://dogechain.info/tx/' + txId;
+}
+
+function createEmbed(message){
+  const embed = message
+  return embed
 }
