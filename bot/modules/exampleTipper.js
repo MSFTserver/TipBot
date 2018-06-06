@@ -138,7 +138,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
       message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
         return;
       }
       ltc.sendFrom(tipper, address, Number(amount), function(err, txId) {
@@ -206,7 +206,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
       message.reply('Error getting Litecoin (LTC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' Litecoin (LTC) for transaction fees!');
         return;
       }
 

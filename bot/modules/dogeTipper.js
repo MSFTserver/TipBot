@@ -126,7 +126,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
       message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
         return;
       }
       doge.sendFrom(tipper, address, Number(amount), function(err, txId) {
@@ -194,7 +194,7 @@ function doTip(bot, message, tipper, words, helpmsg) {
       message.reply('Error getting Dogecoin (DOGE) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        msg.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' Dogecoin (DOGE) for transaction fees!');
         return;
       }
 
