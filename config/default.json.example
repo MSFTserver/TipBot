@@ -64,7 +64,7 @@
   "vtl": {
     "paytxfee": .01,
     "config": {
-      "port": 3341,
+      "port": 3341,  // Default RPC port is 8888 for VTL.
       "user": "username",
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
