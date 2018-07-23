@@ -61,6 +61,14 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
+  "vtl": {
+    "paytxfee": .01,
+    "config": {
+      "port": 3341,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
+  },
   "moderation":{
   "pm2Name": "TipBot",
    // Roles that have access to all commands.
