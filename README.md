@@ -13,6 +13,7 @@ Features:
     - ~~Proton (PROTON)~~ Higgs(PROTON)
     - Phoenixcoin (PXC)
     - Feathercoin (FTC)
+    - Vertical (VTL)
 
 
 ## Create a Bot
