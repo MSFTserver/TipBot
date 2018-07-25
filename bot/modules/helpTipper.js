@@ -3,7 +3,7 @@ let config = require('config');
 let ravenFee = config.get('rvn').paytxfee;
 let dogeFee = config.get('doge').paytxfee;
 let lbryFee = config.get('lbc').paytxfee;
-let protonFee = config.get('proton').paytxfee;
+let phaseFee = config.get('phase').paytxfee;
 let ufoFee = config.get('ufo').paytxfee;
 let phoenixFee = config.get('pxc').paytxfee;
 let featherFee = config.get('ftc').paytxfee;
@@ -22,7 +22,7 @@ exports.tiphelp = {
       '__**LBRY Credit (LBC) Tipper**__\nTransaction Fees: **' + lbryFee + '**\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
     );
     message.author.send(
-      '__**Proton (PROTON) Tipper**__\nTransaction Fees: **' + protonFee + '**\n    **!tipproton balance** : get your balance\n    **!tipproton deposit** : get address for your deposits\n    **!tipproton withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipproton <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipproton private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
+      '__**Phase (PHASE) Tipper**__\nTransaction Fees: **' + phaseFee + '**\n    **!tipphase balance** : get your balance\n    **!tipphase deposit** : get address for your deposits\n    **!tipphase withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipphase <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipphase private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
     );
     message.author.send(
       '__**Uniform Fiscal Object (UFO) Tipper**__\nTransaction Fees: **' + ufoFee + '**\n    **!tipufo balance** : get your balance\n    **!tipufo deposit** : get address for your deposits\n    **!tipufo withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipufo <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipufo private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
