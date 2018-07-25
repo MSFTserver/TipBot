@@ -31,7 +31,10 @@ exports.tiphelp = {
       '__**Phoenixcoin (PXC) Tipper**__\nTransaction Fees: **' + phoenixFee + '**\n    **!tippxc balance** : get your balance\n    **!tippxc deposit** : get address for your deposits\n    **!tippxc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tippxc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tippxc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
     );
     message.author.send(
-      '__**Feathercoin (FTC) Tipper**__\nTransaction Fees: **' + featherFee + '**\n    **!tipftc balance** : get your balance\n    **!tipftc deposit** : get address for your deposits\n    **!tipufo withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipftc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipftc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**'
+      '__**Feathercoin (FTC) Tipper**__\nTransaction Fees: **' + featherFee + '**\n    **!tipftc balance** : get your balance\n    **!tipftc deposit** : get address for your deposits\n    **!tipftc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipftc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipftc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**'
+    );
+    message.author.send(
+      '__**Vertical (VTL) Tipper**__\nTransaction Fees: **' + verticalFee + '**\n    **!tipvtl balance** : get your balance\n    **!tipvtl deposit** : get address for your deposits\n    **!tipvtl withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipvtl <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipvtl private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**'
     );
   }
 };
