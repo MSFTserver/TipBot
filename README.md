@@ -10,7 +10,7 @@ Features:
     - Ravencoin (RVN)
     - LBRY Credits (LBC)
     - Uniform Fiscal Object (UFO)
-    - ~~Proton (PROTON)~~ Higgs(PROTON)
+    - ~~Proton (PROTON)~~ Phase(PHASE)
     - Phoenixcoin (PXC)
     - Feathercoin (FTC)
     - Vertical (VTL)
@@ -22,9 +22,9 @@ Features:
 
     1) After going to the link above click “new application”. Give it a name, picture, and description.
 
-    2) Click “Create Bot User” and click “Yes, Do It!” when the dialog pops up.
+    2) On the side bar navigation menu click "Bot" Click “Add Bot” and click “Yes, Do It!” when the dialog pops up.
 
-    3) Copy down the token used to login and Client ID to invite your new bot to your discord server.
+    3) Copy down the token used on this page to login and Client ID on the general info page to invite your new bot to your discord server.
 
 2) invite the bot to your server using the link below and entering the Client ID or generate your own [Here:link:](https://discordapi.com/permissions.html)
 
@@ -39,7 +39,7 @@ https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bo
 2) Edit and rename `default.json.example` to `default.json` in `/config`. You will use the same info in the next step.
 
     ```
-    "raven": {
+    "rvn": {
       "paytxfee": .01
       "config":
         "port": 3335,

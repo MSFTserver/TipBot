@@ -63,7 +63,7 @@ function doBalance(message, tipper) {
       message.reply('Error getting Vertical (VTL) balance.').then(message => message.delete(10000));
     } else {
     message.channel.send({ embed: {
-    title: '**:bank::money_with_wings::moneybag:Vertical (VTL) Balance!:moneybag::money_with_wings::bank:**',
+    description: '**:bank::money_with_wings::moneybag:Vertical (VTL) Balance!:moneybag::money_with_wings::bank:**',
     color: 1363892,
     fields: [
       {
@@ -88,7 +88,7 @@ function doDeposit(message, tipper) {
       message.reply('Error getting your Vertical (VTL) deposit address.').then(message => message.delete(10000));
     } else {
     message.channel.send({ embed: {
-    title: '**:bank::card_index::moneybag:Vertical (VTL) Address!:moneybag::card_index::bank:**',
+    description: '**:bank::card_index::moneybag:Vertical (VTL) Address!:moneybag::card_index::bank:**',
     color: 1363892,
     fields: [
       {
@@ -134,7 +134,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
         message.channel.send({embed:{
-        title: '**:outbox_tray::money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+        description: '**:outbox_tray::money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
         color: 1363892,
         fields: [
           {
@@ -225,7 +225,7 @@ function sendVTL(bot, message, tipper, recipient, amount, privacyFlag) {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
                   userProfile.user.send({ embed: {
-                  title: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
+                  description: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
                   color: 1363892,
                   fields: [
                     {
@@ -256,7 +256,7 @@ function sendVTL(bot, message, tipper, recipient, amount, privacyFlag) {
                   ]
                 } });
                 message.author.send({ embed: {
-                title: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
+                description: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
                 color: 1363892,
                 fields: [
                   {
@@ -294,7 +294,7 @@ function sendVTL(bot, message, tipper, recipient, amount, privacyFlag) {
                   }
                 } else {
                   message.channel.send({ embed: {
-                  title: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
+                  description: '**:money_with_wings::moneybag:Vertical (VTL) Transaction Completed!:moneybag::money_with_wings:**',
                   color: 1363892,
                   fields: [
                     {
