@@ -7,6 +7,7 @@ let phaseFee = config.get('phase').paytxfee;
 let ufoFee = config.get('ufo').paytxfee;
 let phoenixFee = config.get('pxc').paytxfee;
 let featherFee = config.get('ftc').paytxfee;
+let verticalFee = config.get('vtl').paytxfee;
 exports.commands = ['tiphelp'];
 exports.tiphelp = {
   usage: '<subcommand>',
