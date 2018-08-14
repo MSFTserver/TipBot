@@ -14,28 +14,29 @@ exports.tiphelp = {
   description: 'This commands has been changed to currency specific commands!',
   process: function(bot, message) {
     message.author.send(
-      '__**Ravencoin (RVN) Tipper**__\nTransaction Fees: **' + ravenFee + '**\n    **!tiprvn balance** : get your balance\n    **!tiprvn deposit** : get address for your deposits\n    **!tiprvn withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiprvn <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiprvn private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**Dogecoin (DOGE) Tipper**__\nTransaction Fees: **' + dogeFee + '**\n    **!tipdoge balance** : get your balance\n    **!tipdoge deposit** : get address for your deposits\n    **!tipdoge withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipdoge <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipdoge private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**LBRY Credit (LBC) Tipper**__\nTransaction Fees: **' + lbryFee + '**\n    **!tiplbc balance** : get your balance\n    **!tiplbc deposit** : get address for your deposits\n    **!tiplbc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tiplbc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tiplbc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**Phase (PHASE) Tipper**__\nTransaction Fees: **' + phaseFee + '**\n    **!tipphase balance** : get your balance\n    **!tipphase deposit** : get address for your deposits\n    **!tipphase withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipphase <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipphase private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**Uniform Fiscal Object (UFO) Tipper**__\nTransaction Fees: **' + ufoFee + '**\n    **!tipufo balance** : get your balance\n    **!tipufo deposit** : get address for your deposits\n    **!tipufo withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipufo <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipufo private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**Phoenixcoin (PXC) Tipper**__\nTransaction Fees: **' + phoenixFee + '**\n    **!tippxc balance** : get your balance\n    **!tippxc deposit** : get address for your deposits\n    **!tippxc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tippxc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tippxc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n'
-    );
-    message.author.send(
-      '__**Feathercoin (FTC) Tipper**__\nTransaction Fees: **' + featherFee + '**\n    **!tipftc balance** : get your balance\n    **!tipftc deposit** : get address for your deposits\n    **!tipftc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipftc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipftc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**'
-    );
-    message.author.send(
-      '__**Vertical (VTL) Tipper**__\nTransaction Fees: **' + verticalFee + '**\n    **!tipvtl balance** : get your balance\n    **!tipvtl deposit** : get address for your deposits\n    **!tipvtl withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipvtl <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipvtl private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**'
+      '__**:bank: Coins :bank:**__\n' +
+      '  **Ravencoin (RVN) Tipper**\n    Transaction Fees: **' + ravenFee + '**\n' +
+      '  **Dogecoin (DOGE) Tipper**\n    Transaction Fees: **' + dogeFee + '**\n' +
+      '  **LBRY Credit (LBC) Tipper**\n    Transaction Fees: **' + lbryFee + '**\n' +
+      '  **Phase (PHASE) Tipper**\n    Transaction Fees: **' + phaseFee + '**\n' +
+      '  **Uniform Fiscal Object (UFO) Tipper**\n    Transaction Fees: **' + ufoFee + '**\n' +
+      '  **Phoenixcoin (PXC) Tipper**\n    Transaction Fees: **' + phoenixFee + '**\n' +
+      '  **Feathercoin (FTC) Tipper**\n    Transaction Fees: **' + featherFee + '**\n' +
+      '  **Vertical (VTL) Tipper**\n    Transaction Fees: **' + verticalFee + '**\n' +
+      '__**Commands**__\n' +
+      '  **!tip<CoinSymbol>** : Displays This Message\n' +
+      '  **!tip<CoinSymbol> balance** : get your balance\n' +
+      '  **!tip<CoinSymbol> deposit** : get address for your deposits\n' +
+      '  **!tip<CoinSymbol> withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n' +
+      '  **!tip<CoinSymbol> <@user> <amount>** :mention a user with @ and then the amount to tip them\n' +
+      '  **!tip<CoinSymbol> private <user> <amount>** : put private before Mentioning a user to tip them privately'
+      '**<> : Replace carrot <> symbole with appropriate value.**'
+      '__**Examples**__\n' +
+      '  **!tiprvn @MSFTserver 10**\n' +
+      '  **!tipdoge withdraw DOGEaddressHERE 10**\n' +
+      '  **!tipftc private @MSFTserver 10**\n' +
+      '  **!tiplbc balance**\n' +
+      '  **!tippxc deposit**\n'
     );
   }
 };
