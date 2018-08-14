@@ -29,8 +29,8 @@ exports.tiphelp = {
       '  **!tip<CoinSymbol> deposit** : get address for your deposits\n' +
       '  **!tip<CoinSymbol> withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n' +
       '  **!tip<CoinSymbol> <@user> <amount>** :mention a user with @ and then the amount to tip them\n' +
-      '  **!tip<CoinSymbol> private <user> <amount>** : put private before Mentioning a user to tip them privately'
-      '**<> : Replace carrot <> symbole with appropriate value.**'
+      '  **!tip<CoinSymbol> private <user> <amount>** : put private before Mentioning a user to tip them privately\n' +
+      '**<> : Replace carrot <> symbole with appropriate value.**\n' +
       '__**Examples**__\n' +
       '  **!tiprvn @MSFTserver 10**\n' +
       '  **!tipdoge withdraw DOGEaddressHERE 10**\n' +
