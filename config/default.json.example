@@ -29,7 +29,7 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
-  "phase" {
+  "phase": {
     "paytxfee": .01,
     "config": {
       "port": 3338,
@@ -37,7 +37,7 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
-  "ufo" {
+  "ufo": {
     "paytxfee": .01,
     "config": {
       "port": 3338,
