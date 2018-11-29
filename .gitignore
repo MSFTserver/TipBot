@@ -62,3 +62,5 @@ typings/
 
 # dotenv environment variables file
 .env
+bot/.DS_Store
+.DS_Store

@@ -14,6 +14,7 @@ Features:
     - Phoenixcoin (PXC)
     - Feathercoin (FTC)
     - Vertical (VTL)
+    - Neblio (NEBL)
 
 
 ## Create a Bot
