@@ -8,6 +8,7 @@ let ufoFee = config.get('ufo').paytxfee;
 let phoenixFee = config.get('pxc').paytxfee;
 let featherFee = config.get('ftc').paytxfee;
 let verticalFee = config.get('vtl').paytxfee;
+let neblioFee = config.get('nebl').paytxfee;
 exports.commands = ['tiphelp'];
 exports.tiphelp = {
   usage: '<subcommand>',
@@ -23,6 +24,7 @@ exports.tiphelp = {
       '  **Phoenixcoin (PXC) Tipper**\n    Transaction Fees: **' + phoenixFee + '**\n' +
       '  **Feathercoin (FTC) Tipper**\n    Transaction Fees: **' + featherFee + '**\n' +
       '  **Vertical (VTL) Tipper**\n    Transaction Fees: **' + verticalFee + '**\n' +
+      '  **Neblio (NEBL) Tipper**\n    Transaction Fees: **' + neblioFee + '**\n' +
       '__**Commands**__\n' +
       '  **!tip<CoinSymbol>** : Displays This Message\n' +
       '  **!tip<CoinSymbol> balance** : get your balance\n' +
