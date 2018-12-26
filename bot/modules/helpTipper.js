@@ -9,6 +9,7 @@ let phoenixFee = config.get('pxc').paytxfee;
 let featherFee = config.get('ftc').paytxfee;
 let verticalFee = config.get('vtl').paytxfee;
 let neblioFee = config.get('nebl').paytxfee;
+let prefix = config.get('bot').prefix;
 exports.commands = ['tiphelp'];
 exports.tiphelp = {
   usage: '<subcommand>',
@@ -26,19 +27,19 @@ exports.tiphelp = {
       '  **Vertical (VTL) Tipper**\n    Transaction Fees: **' + verticalFee + '**\n' +
       '  **Neblio (NEBL) Tipper**\n    Transaction Fees: **' + neblioFee + '**\n' +
       '__**Commands**__\n' +
-      '  **!tip<CoinSymbol>** : Displays This Message\n' +
-      '  **!tip<CoinSymbol> balance** : get your balance\n' +
-      '  **!tip<CoinSymbol> deposit** : get address for your deposits\n' +
-      '  **!tip<CoinSymbol> withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n' +
-      '  **!tip<CoinSymbol> <@user> <amount>** :mention a user with @ and then the amount to tip them\n' +
-      '  **!tip<CoinSymbol> private <user> <amount>** : put private before Mentioning a user to tip them privately\n' +
+      '  **' + prefix + 'tip<CoinSymbol>** : Displays This Message\n' +
+      '  **' + prefix + 'tip<CoinSymbol> balance** : get your balance\n' +
+      '  **' + prefix + 'tip<CoinSymbol> deposit** : get address for your deposits\n' +
+      '  **' + prefix + 'tip<CoinSymbol> withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n' +
+      '  **' + prefix + 'tip<CoinSymbol> <@user> <amount>** :mention a user with @ and then the amount to tip them\n' +
+      '  **' + prefix + 'tip<CoinSymbol> private <user> <amount>** : put private before Mentioning a user to tip them privately\n' +
       '**<> : Replace carrot <> symbole with appropriate value.**\n' +
       '__**Examples**__\n' +
-      '  **!tiprvn @MSFTserver 10**\n' +
-      '  **!tipdoge withdraw DOGEaddressHERE 10**\n' +
-      '  **!tipftc private @MSFTserver 10**\n' +
-      '  **!tiplbc balance**\n' +
-      '  **!tippxc deposit**\n'
+      '  **' + prefix + 'tiprvn @MSFTserver 10**\n' +
+      '  **' + prefix + 'tipdoge withdraw DOGEaddressHERE 10**\n' +
+      '  **' + prefix + 'tipftc private @MSFTserver 10**\n' +
+      '  **' + prefix + 'tiplbc balance**\n' +
+      '  **' + prefix + 'tippxc deposit**\n'
     );
   }
 };
