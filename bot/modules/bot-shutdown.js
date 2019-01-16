@@ -33,4 +33,4 @@ exports.shutdown = {
     }
   }
 };
-*/bot-shutdown.js
+*/
