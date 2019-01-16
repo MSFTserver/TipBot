@@ -15,6 +15,7 @@ Features:
     - Feathercoin (FTC)
     - Vertical (VTL)
     - Neblio (NEBL)
+    - Xuez (XUEZ)
 
 
 ## Create a Bot
