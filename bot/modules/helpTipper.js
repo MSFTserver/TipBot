@@ -10,6 +10,7 @@ let featherFee = config.get('ftc').paytxfee;
 let verticalFee = config.get('vtl').paytxfee;
 let neblioFee = config.get('nebl').paytxfee;
 let xuezFee = config.get('xuez').paytxfee;
+let spkFee = config.get('spk').paytxfee;
 let prefix = config.get('bot').prefix;
 exports.commands = ['tiphelp'];
 exports.tiphelp = {
@@ -28,6 +29,7 @@ exports.tiphelp = {
       '  **Vertical (VTL) Tipper**\n    Transaction Fees: **' + verticalFee + '**\n' +
       '  **Neblio (NEBL) Tipper**\n    Transaction Fees: **' + neblioFee + '**\n' +
       '  **Xuez (XUEZ) Tipper**\n    Transaction Fees: **' + xuezFee + '**\n' +
+      '  **SparksPay (SPK) Tipper**\n    Transaction Fees: **' + spkFee + '**\n' +      
       '__**Commands**__\n' +
       '  **' + prefix + 'tip<CoinSymbol>** : Displays This Message\n' +
       '  **' + prefix + 'tip<CoinSymbol> balance** : get your balance\n' +

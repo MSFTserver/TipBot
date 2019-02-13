@@ -19,7 +19,7 @@
       "port": 3336,
       "user": "username",
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
-}
+    }
   },
   "lbc": {
     "paytxfee": .01,
@@ -77,7 +77,7 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
-    "xuez": {
+  "xuez": {
     "paytxfee": .01,
     "config": {
       "port": 3345,
@@ -85,6 +85,15 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
+  "spk": {
+    "paytxfee": .01,
+    "config": {
+      "port": 8892,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
+  },
+  
   "moderation":{
   "pm2Name": "TipBot",
    // Roles that have access to all commands.
