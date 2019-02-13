@@ -16,6 +16,7 @@ Features:
     - Vertical (VTL)
     - Neblio (NEBL)
     - Xuez (XUEZ)
+    - SparksPay (SPK)
 
 
 ## Create a Bot
