@@ -37,6 +37,14 @@
       "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
     }
   },
+  "ppc": {
+    "paytxfee": .01,
+    "config": {
+      "port": 8832,
+      "user": "username",
+      "pass": "Do-Not-Use-This-Password-Youll-Be-Hacked-For-all-Teh-Moneys!"
+    }
+  }, 
   "ufo": {
     "paytxfee": .01,
     "config": {
